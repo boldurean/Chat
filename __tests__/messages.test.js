@@ -1,6 +1,6 @@
 // @ts-check
 
-import buildApp from '../server';
+import buildApp from '../server/index.js';
 
 const buildUrl = (url) => `/api/v1/${url}`;
 
