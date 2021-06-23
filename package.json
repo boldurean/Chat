@@ -1,5 +1,5 @@
 {
-  "name": "frontend_l4_chat_project",
+  "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "",
   "main": "server/index.js",
@@ -15,9 +15,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:hexlet-components/projects-frontend-l4-server.git"
+    "url": "git@github.com:boldurean/frontend-project-lvl4.git"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Vasilii Boldurean",
   "license": "ISC",
   "homepage": "",
   "dependencies": {
