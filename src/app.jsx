@@ -1,12 +1,31 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import Home from './components/home.jsx';
+import Login from './components/login.jsx';
+import Error404 from './components/Error404.jsx';
 
 const App = () => (
-  <div className="card text-center">
-    <div className="card-body">
-      <h5 className="card-title">Here we go, last frontend project!</h5>
-      <p className="card-text">it works!</p>
+  <Router>
+    <div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/404">
+          <Error404 />
+        </Route>
+        <Redirect to="/404" />
+      </Switch>
     </div>
-  </div>
+  </Router>
 );
 
 const DOM = <App />;
