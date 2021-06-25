@@ -58,7 +58,7 @@ const AuthButton = () => {
 const App = () => (
   <AuthProvider>
     <Router>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="true">
         <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
         <AuthButton />
       </Navbar>
