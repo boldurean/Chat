@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Error404 = () => {
+const Page404 = () => {
   const history = useHistory();
   return (
     <div>
@@ -13,4 +13,4 @@ const Error404 = () => {
   );
 };
 
-export default Error404;
+export default Page404;

@@ -1,17 +1,16 @@
 // @ts-check
-
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-
 import '../assets/application.scss';
+import React from 'react';
 import { render } from 'react-dom';
-import DOM from './app.jsx';
+import App from './components/index.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
 const container = document.querySelector('#chat');
-console.log('it works!');
 
-render(DOM, container);
+render(<App />, container);
+console.log('it works!');
