@@ -7,7 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
-import useAuth from '../hooks';
+import useAuth from '../hooks/useAuth.js';
 
 const LoginPage = () => {
   const auth = useAuth();

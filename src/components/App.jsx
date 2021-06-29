@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect, Link,
 } from 'react-router-dom';
+import fetchChatData from '../app/slices/fetchData.js';
 import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
 import authContext from '../contexts/authContext.js';
-import useAuth from '../hooks/index.js';
+import useAuth from '../hooks/useAuth.js';
 
 const hasToken = JSON.parse(localStorage.getItem('userId')) !== null;
 
@@ -55,27 +57,35 @@ const AuthButton = () => {
   );
 };
 
-const App = () => (
-  <AuthProvider>
-    <Router>
-      <Navbar bg="light" expand="true">
-        <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-        <AuthButton />
-      </Navbar>
+const App = () => {
 
-      <Switch>
-        <Route path="/signup">
-          <SignupPage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <PrivateRoute path="/">
-          <Chat />
-        </PrivateRoute>
-      </Switch>
-    </Router>
-  </AuthProvider>
-);
+  if (hasToken) {
+    const dispatch = useDispatch();
+    dispatch(fetchChatData());
+  }
+
+  return (
+    <AuthProvider>
+      <Router>
+        <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2" expand="true">
+          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <AuthButton />
+        </Navbar>
+
+        <Switch>
+          <Route path="/signup">
+            <SignupPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <PrivateRoute path="/">
+            <Chat />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    </AuthProvider>
+  );
+}
 
 export default App;
