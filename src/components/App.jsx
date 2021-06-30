@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect, Link,
 } from 'react-router-dom';
-import fetchChatData from '../app/slices/fetchData.js';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
@@ -57,32 +55,29 @@ const AuthButton = () => {
   );
 };
 
-const App = () => {
+const App = () => (
+  <AuthProvider>
+    <Router>
+      <div className="d-flex flex-column h-100">
+        <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2" expand="true">
+          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <AuthButton />
+        </Navbar>
 
-  return (
-    <AuthProvider>
-      <Router>
-        <div className="d-flex flex-column h-100">
-          <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2" expand="true">
-            <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-            <AuthButton />
-          </Navbar>
-
-          <Switch>
-            <Route path="/signup">
-              <SignupPage />
-            </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <PrivateRoute path="/">
-              <Chat />
-            </PrivateRoute>
-          </Switch>
-        </div>
-      </Router>
-    </AuthProvider>
-  );
-}
+        <Switch>
+          <Route path="/signup">
+            <SignupPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <PrivateRoute path="/">
+            <Chat />
+          </PrivateRoute>
+        </Switch>
+      </div>
+    </Router>
+  </AuthProvider>
+);
 
 export default App;
