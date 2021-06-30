@@ -8,7 +8,7 @@ import {
   Redirect, Link,
 } from 'react-router-dom';
 import fetchChatData from '../app/slices/fetchData.js';
-import Chat from './Chat.jsx';
+import Chat from './chat/Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
 import authContext from '../contexts/authContext.js';
@@ -59,30 +59,27 @@ const AuthButton = () => {
 
 const App = () => {
 
-  if (hasToken) {
-    const dispatch = useDispatch();
-    dispatch(fetchChatData());
-  }
-
   return (
     <AuthProvider>
       <Router>
-        <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2" expand="true">
-          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-          <AuthButton />
-        </Navbar>
+        <div className="d-flex flex-column h-100">
+          <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2" expand="true">
+            <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+            <AuthButton />
+          </Navbar>
 
-        <Switch>
-          <Route path="/signup">
-            <SignupPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <PrivateRoute path="/">
-            <Chat />
-          </PrivateRoute>
-        </Switch>
+          <Switch>
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/">
+              <Chat />
+            </PrivateRoute>
+          </Switch>
+        </div>
       </Router>
     </AuthProvider>
   );

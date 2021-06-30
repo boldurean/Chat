@@ -18,7 +18,7 @@ export const slice = createSlice({
       .filter((channel) => channel.id !== id),
   },
   extraReducers: {
-    [fetchingDataSuccess]: (state, { payload }) => [...state, ...payload.channels],
+    [fetchingDataSuccess]: (state, { payload }) => payload.channels,
   },
 });
 
