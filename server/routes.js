@@ -70,7 +70,7 @@ export default (app, defaultState = {}) => {
     socket.on('clearMessages', (acknowledge = _.noop) => {
       state.messages = [];
       acknowledge({ status: 'ok' });
-      app.io.emit('newChannel', { msg: 'messagesDeleted' });
+      app.io.emit('clearMessages', 'Messages has been deleted');
     });
 
     socket.on('removeChannel', ({ id }, acknowledge = _.noop) => {

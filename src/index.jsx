@@ -11,15 +11,19 @@ import App from './components/App.jsx';
 import store from './app/store.js';
 import { actions } from './app/slices';
 
-const { newMessage } = actions;
+const { newMessage, clearMessages } = actions;
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
 socket.on(E.NEW_MESSAGE, (data) => {
-  console.log(data);
   store.dispatch(newMessage(data));
+});
+
+socket.on(E.DELETE_MESSAGES, (data) => {
+  console.log(data);
+  store.dispatch(clearMessages());
 });
 
 render(

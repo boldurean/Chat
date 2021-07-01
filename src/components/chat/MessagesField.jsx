@@ -7,13 +7,14 @@ import E from '../../client/events.js';
 import socket from '../../client/socket.js';
 
 const MessagesField = () => {
+  const { username } = JSON.parse(localStorage.getItem('userId'));
   const [inputValue, setInputValue] = useState('');
   const { currentChannelId } = useSelector((state) => state);
   const inputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const messageData = { text: inputValue, channelId: currentChannelId };
+    const messageData = { text: inputValue, channelId: currentChannelId, username };
     socket.emit(E.NEW_MESSAGE, messageData);
     setInputValue('');
     inputRef.current.focus();
@@ -28,6 +29,7 @@ const MessagesField = () => {
       <Form onSubmit={handleSubmit}>
         <InputGroup className="mb-3">
           <FormControl
+            required
             ref={inputRef}
             name="body"
             value={inputValue}

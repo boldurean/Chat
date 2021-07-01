@@ -8,6 +8,12 @@ const slice = createSlice({
     newMessage: (state, action) => {
       state.push(action.payload);
     },
+    clearMessages: () => {
+      const newState = {
+        text: 'Messages deleted', id: Math.random(), channelId: 1, username: 'admin',
+      };
+      return [newState];
+    },
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],
