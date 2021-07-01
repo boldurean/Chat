@@ -23,7 +23,11 @@ const MessagesField = () => {
           if (response.status === 'ok') {
             formik.resetForm();
             inputRef.current.focus();
+            return;
           }
+          setTimeout(() => {
+            formik.isSubmitting = false;
+          }, 2000);
         });
       } catch (err) {
         console.log(err);
@@ -48,7 +52,7 @@ const MessagesField = () => {
           <InputGroup.Text>
             <ButtonGroup size="sm">
               <Button
-                disabled={!formik.isValid || !formik.dirty}
+                disabled={formik.isSubmitting || !formik.dirty}
                 type="submit"
                 bsPrefix="btn btn-group-vertical"
               >
