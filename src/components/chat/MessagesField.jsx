@@ -26,7 +26,7 @@ const MessagesField = () => {
             return;
           }
           setTimeout(() => {
-            formik.isSubmitting = false;
+            formik.setSubmitting(false);
           }, 2000);
         });
       } catch (err) {
