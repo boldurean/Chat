@@ -1,25 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import E from '../../client/events.js';
-import socket from '../../client/socket.js';
-import { actions } from '../../app/slices';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const MessagesBox = () => {
-  const dispatch = useDispatch();
-  const { newMessage } = actions;
-  const [data, setData] = useState({});
   const { messages, currentChannelId } = useSelector((state) => state);
-
   const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
-
-  socket.on(E.NEW_MESSAGE, (arg) => {
-    console.log(arg);
-    setData(arg);
-  });
-
-  useEffect(() => {
-    dispatch(newMessage(data));
-  }, [data]);
 
   return (
     <div id="message-box" className="chat-messages overflow-auto px-5 ">
