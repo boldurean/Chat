@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { useFormik } from 'formik';
+import React, { useRef } from 'react';
 import {
   Button, ButtonGroup, Form, FormControl, InputGroup,
 } from 'react-bootstrap';
@@ -8,37 +9,49 @@ import socket from '../../client/socket.js';
 
 const MessagesField = () => {
   const { username } = JSON.parse(localStorage.getItem('userId'));
-  const [inputValue, setInputValue] = useState('');
   const { currentChannelId } = useSelector((state) => state);
   const inputRef = useRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const messageData = { text: inputValue, channelId: currentChannelId, username };
-    socket.emit(E.NEW_MESSAGE, messageData);
-    setInputValue('');
-    inputRef.current.focus();
-  };
-
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+    onSubmit: (values) => {
+      const newMessage = { text: values.body, channelId: currentChannelId, username };
+      try {
+        socket.emit(E.NEW_MESSAGE, newMessage, (response) => {
+          if (response.status === 'ok') {
+            formik.resetForm();
+            inputRef.current.focus();
+          }
+        });
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
+    },
+  });
 
   return (
     <div className="mt-auto px-5 py-3">
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={formik.handleSubmit}>
         <InputGroup className="mb-3">
           <FormControl
             required
             ref={inputRef}
             name="body"
-            value={inputValue}
-            onChange={handleChange}
+            disabled={formik.isSubmitting}
+            value={formik.values.body}
+            onChange={formik.handleChange}
             placeholder="Message"
           />
           <InputGroup.Text>
             <ButtonGroup size="sm">
-              <Button type="submit" bsPrefix="btn btn-group-vertical">
+              <Button
+                disabled={!formik.isValid || !formik.dirty}
+                type="submit"
+                bsPrefix="btn btn-group-vertical"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
                   <path
                     fillRule="evenodd"

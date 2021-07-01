@@ -11,7 +11,7 @@ import MessagesField from './MessagesField.jsx';
 const Chat = () => (
   <Container bsPrefix="container h-100 my-4 overflow-hidden rounded shadow">
     <Row bsPrefix="row h-100 bg-white flex-md-row">
-      <Col bsPrefix="col-4 col-md-2 border-end pt-5 px-0 bg-light">
+      <Col bsPrefix="col-4 col-md-3 col-lg-2 border-end pt-5 px-0 bg-light">
         <div className="d-flex justify-content-between mb-2 ps-2 pe-2">
           <span>Channels</span>
           <AddChannelButton />
