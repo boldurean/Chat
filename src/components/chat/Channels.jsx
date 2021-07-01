@@ -31,7 +31,7 @@ const renderChannelButton = (channel, currentChannelId, dispatch) => {
       <Dropdown as={ButtonGroup} className="w-100">
         <Button
           variant="btn"
-          className={`w-100 rounded-0 text-start ${buttonType}`}
+          className={`w-100 rounded-0 text-start text-truncate ${buttonType}`}
           onClick={() => dispatch(actions.switchChannel(channel.id))}
         >
           <span className="me-1">#</span>

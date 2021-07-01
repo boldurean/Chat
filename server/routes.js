@@ -14,7 +14,7 @@ const buildState = (defaultState) => {
     channels: [
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
-      { id: _.uniqueId(), name: 'users', removable: true },
+      { id: _.uniqueId(), name: 'VeryLongChannelName', removable: true },
     ],
     messages: [],
     currentChannelId: generalChannelId,
@@ -65,6 +65,12 @@ export default (app, defaultState = {}) => {
       state.channels.push(channelWithId);
       acknowledge({ status: 'ok', data: channelWithId });
       app.io.emit('newChannel', channelWithId);
+    });
+
+    socket.on('clearMessages', (acknowledge = _.noop) => {
+      state.messages = [];
+      acknowledge({ status: 'ok' });
+      app.io.emit('newChannel', { msg: 'messagesDeleted' });
     });
 
     socket.on('removeChannel', ({ id }, acknowledge = _.noop) => {

@@ -5,7 +5,9 @@ const slice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
-    newMessage: (state, { payload }) => state.push(payload.message),
+    newMessage: (state, action) => {
+      state.push(action.payload);
+    },
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],

@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import { fetchingDataSuccess } from './fetchData.js';
 
 export const slice = createSlice({
   name: 'channels',
   initialState: [],
   reducers: {
-    newChannel: (state, { name }) => state.push({ id: _.uniqueId(), name, removable: true }),
+    newChannel: (state, action) => state.push(action.payload),
     renameChannel: (state, { id, name }) => state.map((channel) => {
       if (channel.id === id) {
         return { ...channel, name };
