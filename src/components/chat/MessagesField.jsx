@@ -23,12 +23,11 @@ const MessagesField = () => {
           if (response.status === 'ok') {
             formik.resetForm();
             inputRef.current.focus();
-            return;
           }
-          setTimeout(() => {
-            formik.setSubmitting(false);
-          }, 2000);
         });
+        setTimeout(() => {
+          formik.setSubmitting(false);
+        }, 2000);
       } catch (err) {
         console.log(err);
         throw err;
