@@ -26,15 +26,16 @@ const Rename = (props) => {
         socket.emit('renameChannel', data, (response) => {
           if (response.status === 'ok') {
             hideModal();
+            return;
           }
+          setTimeout(() => formik.setSubmitting(false));
         });
-        setTimeout(() => formik.setSubmitting(false));
       } catch (err) {
         console.log(err);
         throw err;
       }
     },
-  });
+});
 
   const refEl = useRef();
 

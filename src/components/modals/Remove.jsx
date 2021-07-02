@@ -14,9 +14,10 @@ const Remove = (props) => {
       socket.emit('removeChannel', channel, (response) => {
         if (response.status === 'ok') {
           hideModal();
+          return;
         }
+        setTimeout(() => setIsSubmitting(false));
       });
-      setTimeout(() => setIsSubmitting(false));
     } catch (err) {
       console.log(err);
       throw err;

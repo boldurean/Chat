@@ -17,12 +17,14 @@ const Add = (props) => {
     onSubmit: (values) => {
       const newChannel = { name: values.body };
       try {
+        // eslint-disable-next-line consistent-return
         socket.emit('newChannel', newChannel, (response) => {
           if (response.status === 'ok') {
             hideModal();
+            return;
           }
+          setTimeout(() => formik.setSubmitting(false), 2000);
         });
-        setTimeout(() => formik.setSubmitting(false), 2000);
       } catch (err) {
         console.log(err);
         throw err;

@@ -3,7 +3,7 @@ import {
   Col, Container, Row,
 } from 'react-bootstrap';
 import AddChannelButton from './AddChannelButton.jsx';
-import Channels from './Channels.jsx';
+import Channels from './ChannelsList.jsx';
 import MessagesBox from './MessagesBox.jsx';
 import MessagesCounter from './MessagesCounter.jsx';
 import MessagesField from './MessagesField.jsx';

@@ -47,7 +47,7 @@ const renderChannelButton = (channel, currentChannelId, showModal, dispatch) => 
   );
 };
 
-const Channels = (props) => {
+const ChannelsList = (props) => {
   const { showModal } = props;
   const { channels, currentChannelId } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -68,4 +68,4 @@ const Channels = (props) => {
   );
 };
 
-export default Channels;
+export default ChannelsList;
