@@ -35,7 +35,7 @@ const Rename = (props) => {
         throw err;
       }
     },
-  });
+});
 
   const refEl = useRef();
 
