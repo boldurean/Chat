@@ -66,11 +66,11 @@ const Rename = (props) => {
               onBlur={formik.handleBlur}
               isInvalid={!!formik.errors.body}
               type="text"
-              placeholder="Enter email"
+              placeholder="Enter new name"
               disabled={formik.isSubmitting}
             />
             <Form.Text className="text-muted">
-              Please enter channel name
+              Please enter new name
             </Form.Text>
             <Form.Control.Feedback type="invalid">
               {formik.errors.body}

@@ -69,7 +69,7 @@ const Add = (props) => {
               isInvalid={!!formik.errors.body}
               disabled={formik.isSubmitting}
               type="text"
-              placeholder="Enter email"
+              placeholder="channel name"
             />
             <Form.Text className="text-muted">
               Please enter channel name
