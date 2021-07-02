@@ -7,40 +7,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../app/slices';
 import fetchChatData from '../../app/slices/fetchData.js';
 
-const renderChannelButton = (channel, currentChannelId, showModal, dispatch) => {
+const ChannelButton = ({ channel, currentChannelId, showModal }) => {
+  const dispatch = useDispatch();
+  const { switchChannel } = actions;
   const buttonType = channel.id === currentChannelId
     ? 'btn btn-secondary'
     : 'btn';
+
   if (!channel.removable) {
     return (
-      <Nav.Item key={channel.id} as="li" bsPrefix="nav-item w-100">
-        <button
-          type="button"
-          className={`w-100 rounded-0 text-start ${buttonType}`}
-          onClick={() => dispatch(actions.switchChannel(channel.id))}
+      <Nav.Item as="li" bsPrefix="nav-item w-100">
+        <Button
+          variant={buttonType}
+          className="w-100 rounded-0 text-start"
+          onClick={() => dispatch(switchChannel(channel.id))}
         >
           <span className="me-1">#</span>
           {channel.name}
-        </button>
+        </Button>
       </Nav.Item>
     );
   }
 
   return (
-    <Nav.Item key={channel.id} as="li" bsPrefix="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="w-100">
+    <Nav.Item as="li" bsPrefix="nav-item w-100">
+      <Dropdown
+        as={ButtonGroup}
+        className="d-flex"
+      >
         <Button
-          variant="btn"
-          className={`w-100 rounded-0 text-start text-truncate ${buttonType}`}
-          onClick={() => dispatch(actions.switchChannel(channel.id))}
+          variant={buttonType}
+          className="w-100 rounded-0 text-start text-truncate"
+          onClick={() => dispatch(switchChannel(channel.id))}
         >
           <span className="me-1">#</span>
           {channel.name}
         </Button>
-        <Dropdown.Toggle split variant="btn" className={buttonType} />
-        <Dropdown.Menu className="super-colors">
-          <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="1">Rename</Dropdown.Item>
-          <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="2">Delete channel</Dropdown.Item>
+
+        <Dropdown.Toggle split variant={buttonType} id="dropdown-split-basic" />
+
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => showModal('renaming', channel)}
+          >
+            Rename
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => showModal('removing', channel)}
+          >
+            Delete channel
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Nav.Item>
@@ -57,12 +73,14 @@ const ChannelsList = (props) => {
   }, []);
 
   return (
-    <Nav as="ul" bsPrefix="nav flex-column nav-pills nav-fill px-2">
-      {channels.map((channel) => renderChannelButton(
-        channel,
-        currentChannelId,
-        showModal,
-        dispatch,
+    <Nav as="ul" className="flex-column nav-pills nav-fill px-2">
+      {channels.map((channel) => (
+        <ChannelButton
+          key={channel.id}
+          channel={channel}
+          currentChannelId={currentChannelId}
+          showModal={showModal}
+        />
       ))}
     </Nav>
   );
