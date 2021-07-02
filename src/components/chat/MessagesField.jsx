@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Button, ButtonGroup, Form, FormControl, InputGroup,
 } from 'react-bootstrap';
@@ -34,6 +34,10 @@ const MessagesField = () => {
       }
     },
   });
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [currentChannelId]);
 
   return (
     <div className="mt-auto px-5 py-3">

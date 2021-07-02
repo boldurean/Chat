@@ -14,7 +14,6 @@ const buildState = (defaultState) => {
     channels: [
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
-      { id: _.uniqueId(), name: 'VeryLongChannelName', removable: true },
     ],
     messages: [],
     currentChannelId: generalChannelId,
@@ -45,6 +44,12 @@ export default (app, defaultState = {}) => {
   app.io.on('connect', (socket) => {
     console.log({ 'socket.id': socket.id });
 
+    socket.on('clearMessages', (acknowledge = _.noop) => {
+      state.messages = [];
+      acknowledge({ status: 'ok' });
+      app.io.emit('clearMessages', 'Messages has been deleted');
+    });
+
     socket.on('newMessage', (message, acknowledge = _.noop) => {
       const messageWithId = {
         ...message,
@@ -65,12 +70,6 @@ export default (app, defaultState = {}) => {
       state.channels.push(channelWithId);
       acknowledge({ status: 'ok', data: channelWithId });
       app.io.emit('newChannel', channelWithId);
-    });
-
-    socket.on('clearMessages', (acknowledge = _.noop) => {
-      state.messages = [];
-      acknowledge({ status: 'ok' });
-      app.io.emit('clearMessages', 'Messages has been deleted');
     });
 
     socket.on('removeChannel', ({ id }, acknowledge = _.noop) => {

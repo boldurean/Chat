@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 import store from './app/store.js';
 
-
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }

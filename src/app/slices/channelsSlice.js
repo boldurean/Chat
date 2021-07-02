@@ -5,16 +5,14 @@ export const slice = createSlice({
   name: 'channels',
   initialState: [],
   reducers: {
-    newChannel: (state, action) => state.push(action.payload),
-    renameChannel: (state, { id, name }) => state.map((channel) => {
-      if (channel.id === id) {
-        return { ...channel, name };
-      }
-      return channel;
-    }),
-    removeChannel: (state, { id }) => state
-      .filter((channel) => channel.removable === true)
-      .filter((channel) => channel.id !== id),
+    newChannel: (state, action) => [...state, action.payload],
+    renameChannel: (state, action) => {
+      const channel = state.find((c) => c.id === action.payload.id);
+      channel.name = action.payload.name;
+      return state;
+    },
+    removeChannel: (state, action) => state
+      .filter((channel) => channel.id !== action.payload.id),
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => payload.channels,

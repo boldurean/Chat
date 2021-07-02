@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../app/slices';
 import fetchChatData from '../../app/slices/fetchData.js';
 
-const renderChannelButton = (channel, currentChannelId, dispatch) => {
+const renderChannelButton = (channel, currentChannelId, showModal, dispatch) => {
   const buttonType = channel.id === currentChannelId
     ? 'btn btn-secondary'
     : 'btn';
@@ -39,15 +39,16 @@ const renderChannelButton = (channel, currentChannelId, dispatch) => {
         </Button>
         <Dropdown.Toggle split variant="btn" className={buttonType} />
         <Dropdown.Menu className="super-colors">
-          <Dropdown.Item eventKey="1">Rename</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Delete channel</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="1">Rename</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="2">Delete channel</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Nav.Item>
   );
 };
 
-const Channels = () => {
+const Channels = (props) => {
+  const { showModal } = props;
   const { channels, currentChannelId } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -57,7 +58,12 @@ const Channels = () => {
 
   return (
     <Nav as="ul" bsPrefix="nav flex-column nav-pills nav-fill px-2">
-      {channels.map((channel) => renderChannelButton(channel, currentChannelId, dispatch))}
+      {channels.map((channel) => renderChannelButton(
+        channel,
+        currentChannelId,
+        showModal,
+        dispatch,
+      ))}
     </Nav>
   );
 };

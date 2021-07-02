@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchingDataSuccess } from './fetchData.js';
+import { actions as channelsSliceActions } from './channelsSlice.js';
+
+const { removeChannel } = channelsSliceActions;
 
 const slice = createSlice({
   name: 'messages',
@@ -17,6 +20,8 @@ const slice = createSlice({
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],
+    [removeChannel]: (state, action) => state
+      .filter((message) => message.channelId !== action.payload.id),
   },
 });
 
