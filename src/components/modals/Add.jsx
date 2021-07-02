@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import socket from '../../client/socket.js';
+import { actions } from '../../app/slices';
 
 const Add = (props) => {
   const { hideModal } = props;
+  const { switchChannel } = actions;
   const { channels } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const existingChannelNames = channels.map((c) => c.name);
 
   const formik = useFormik({
@@ -17,9 +20,10 @@ const Add = (props) => {
     onSubmit: (values) => {
       const newChannel = { name: values.body };
       try {
-        // eslint-disable-next-line consistent-return
         socket.emit('newChannel', newChannel, (response) => {
           if (response.status === 'ok') {
+            const { id } = response.data;
+            dispatch(switchChannel(id));
             hideModal();
             return;
           }

@@ -21,7 +21,6 @@ socket.on(E.DELETE_MESSAGES, (data) => {
 
 socket.on(E.NEW_CHANNEL, (data) => {
   store.dispatch(newChannel(data));
-  store.dispatch(switchChannel(data.id));
 });
 
 socket.on(E.REMOVE_CHANNEL, (data) => {
