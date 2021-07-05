@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './LoginPage.jsx';
+import Page404 from './Page404.jsx';
 import SignupPage from './SignupPage.jsx';
 import authContext from '../contexts/authContext.js';
 import useAuth from '../hooks/useAuth.js';
@@ -33,12 +34,13 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const PrivateRoute = ({ children, path }) => {
+const PrivateRoute = ({ children, exact, path }) => {
   const auth = useAuth();
 
   return (
     <Route
       path={path}
+      exact={exact}
       render={({ location }) => (auth.loggedIn
         ? children
         : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
@@ -71,9 +73,13 @@ const App = () => (
           <Route path="/login">
             <LoginPage />
           </Route>
-          <PrivateRoute path="/">
+          <PrivateRoute exact path="/">
             <Chat />
           </PrivateRoute>
+          <Route path="/404">
+            <Page404 />
+          </Route>
+          <Redirect to="/404" />
         </Switch>
       </div>
     </Router>
