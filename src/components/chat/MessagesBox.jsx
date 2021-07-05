@@ -2,7 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const MessagesBox = () => {
-  const { messages, currentChannelId } = useSelector((state) => state);
+  const {
+    messages,
+    channels: { currentChannelId },
+  } = useSelector((state) => state);
   const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
 
   return (

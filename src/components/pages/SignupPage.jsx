@@ -5,7 +5,8 @@ import { Button, Card, Container, Form, Row } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
-import useAuth from '../hooks/useAuth.js';
+import useAuth from '../../hooks/useAuth.js';
+import routes from '../../routes.js';
 
 const SignupPage = () => {
   const auth = useAuth();
@@ -36,9 +37,8 @@ const SignupPage = () => {
     onSubmit: async (values) => {
       setUserCreated(false);
       setUserExisting(false);
-      const path = '/api/v1/signup';
       try {
-        const res = await axios.post(path, values);
+        const res = await axios.post(routes.signupPath(), values);
         console.log(res);
         localStorage.setItem('userId', JSON.stringify(res.data));
         auth.logIn();

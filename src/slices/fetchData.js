@@ -1,17 +1,17 @@
 import { createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import routes from '../routes.js';
 
 export const fetchingDataRequest = createAction('FETCH_DATA_REQUEST');
 export const fetchingDataSuccess = createAction('FETCH_DATA_SUCCESS');
 export const fetchingDataFailure = createAction('FETCH_DATA_FAILURE');
 
 const fetchChatData = () => async (dispatch) => {
-  const path = '/api/v1/data';
   const userId = JSON.parse(localStorage.getItem('userId'));
   if (userId) {
     try {
       dispatch(fetchingDataRequest());
-      const req = await axios.get(path, {
+      const req = await axios.get(routes.dataPath(), {
         headers: {
           Authorization: `Bearer ${userId.token}`,
         },

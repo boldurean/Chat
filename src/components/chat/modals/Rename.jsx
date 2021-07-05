@@ -3,13 +3,15 @@ import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-import socket from '../../client/socket.js';
+import useAPI from '../../../hooks/useAPI.js';
 
 const Rename = (props) => {
   const { modal, hideModal } = props;
-  const { channels } = useSelector((state) => state);
-  const existingChannelNames = channels.map((c) => c.name);
+  const { channelsList } = useSelector((state) => state.channels);
+  const existingChannelNames = channelsList.map((c) => c.name);
   const { channel } = modal;
+  const API = useAPI();
+
   const formik = useFormik({
     initialValues: {
       body: channel.name,
@@ -17,19 +19,14 @@ const Rename = (props) => {
     validationSchema: yup.object().shape({
       body: yup
         .string()
+        .min(3, 'Name needs to be from 3 to 20 characters')
+        .max(20, 'Name needs to be from 3 to 20 characters')
         .notOneOf(existingChannelNames, 'Channel with this name already exists')
         .required('Required'),
     }),
     onSubmit: (values) => {
-      const data = { id: channel.id, name: values.body };
       try {
-        socket.emit('renameChannel', data, (response) => {
-          if (response.status === 'ok') {
-            hideModal();
-            return;
-          }
-          setTimeout(() => formik.setSubmitting(false));
-        });
+        API.renameChannel({ id: channel.id, name: values.body });
       } catch (err) {
         console.log(err);
         throw err;
@@ -41,7 +38,9 @@ const Rename = (props) => {
 
   useEffect(() => {
     refEl.current.select();
-  }, []);
+    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
+    return () => clearTimeout(timer);
+  }, [formik.isSubmitting]);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>

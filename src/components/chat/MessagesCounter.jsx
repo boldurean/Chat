@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import socket from '../../client/socket.js';
-import E from '../../client/events.js';
+import socket from '../../api/socket.js';
+import E from '../../api/events.js';
 
 const MessagesCounter = () => {
   const { username } = JSON.parse(localStorage.getItem('userId'));
@@ -19,13 +19,13 @@ const MessagesCounter = () => {
     );
   };
 
-  const { channels, currentChannelId } = useSelector((state) => state);
+  const { channelsList, currentChannelId } = useSelector((state) => state.channels);
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small d-flex justify-content-between">
       <div>
         <p className="m-0">
           <b>
-            {channels.reduce((acc, channel) => {
+            {channelsList.reduce((acc, channel) => {
               if (channel.id === currentChannelId) {
                 return acc + channel.name;
               }

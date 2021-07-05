@@ -2,12 +2,12 @@ import { useFormik } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { Button, ButtonGroup, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import E from '../../client/events.js';
-import socket from '../../client/socket.js';
+import useAPI from '../../hooks/useAPI.js';
 
 const MessagesField = () => {
+  const API = useAPI();
   const { username } = JSON.parse(localStorage.getItem('userId'));
-  const { currentChannelId } = useSelector((state) => state);
+  const { currentChannelId } = useSelector((state) => state.channels);
   const inputRef = useRef();
 
   const formik = useFormik({
@@ -15,17 +15,9 @@ const MessagesField = () => {
       body: '',
     },
     onSubmit: (values) => {
-      const newMessage = { text: values.body, channelId: currentChannelId, username };
+      const { resetForm } = formik;
       try {
-        socket.emit(E.NEW_MESSAGE, newMessage, (response) => {
-          if (response.status === 'ok') {
-            formik.resetForm();
-            inputRef.current.focus();
-          }
-        });
-        setTimeout(() => {
-          formik.setSubmitting(false);
-        }, 2000);
+        API.newMessage({ text: values.body, channelId: currentChannelId, username }, resetForm);
       } catch (err) {
         console.log(err);
         throw err;
@@ -36,6 +28,12 @@ const MessagesField = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
+
+  useEffect(() => {
+    inputRef.current.focus();
+    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
+    return () => clearTimeout(timer);
+  }, [formik.isSubmitting]);
 
   return (
     <div className="mt-auto px-5 py-3">

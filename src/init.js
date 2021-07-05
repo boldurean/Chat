@@ -1,13 +1,11 @@
-import io from 'socket.io-client';
-import store from '../app/store.js';
-import { actions } from '../app/slices/index.js';
-import E from './events.js';
+import E from './api/events.js';
+import socket from './api/socket.js';
+import { actions } from './slices';
+import createStore from './store.js';
 
-const URL = window.location.host;
-const socket = io.connect(URL);
+const store = createStore();
 
-const { newMessage, newChannel, removeChannel, renameChannel, clearMessages, switchChannel } =
-  actions;
+const { newMessage, newChannel, removeChannel, renameChannel, clearMessages } = actions;
 
 socket.on(E.NEW_MESSAGE, (data) => {
   store.dispatch(newMessage(data));
@@ -19,16 +17,16 @@ socket.on(E.DELETE_MESSAGES, (data) => {
 });
 
 socket.on(E.NEW_CHANNEL, (data) => {
+  console.log(data);
   store.dispatch(newChannel(data));
 });
 
 socket.on(E.REMOVE_CHANNEL, (data) => {
   store.dispatch(removeChannel(data));
-  store.dispatch(switchChannel(1));
 });
 
 socket.on(E.RENAME_CHANNEL, (data) => {
   store.dispatch(renameChannel(data));
 });
 
-export default socket;
+export default store;

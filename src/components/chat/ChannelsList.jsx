@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../app/slices';
-import fetchChatData from '../../app/slices/fetchData.js';
+import { actions } from '../../slices';
+import fetchChatData from '../../slices/fetchData.js';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
   const dispatch = useDispatch();
@@ -39,10 +39,10 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
         <Dropdown.Toggle split variant={buttonType} id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => showModal('renaming', channel)}>Rename</Dropdown.Item>
           <Dropdown.Item onClick={() => showModal('removing', channel)}>
             Delete channel
           </Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('renaming', channel)}>Rename</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Nav.Item>
@@ -51,7 +51,7 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 
 const ChannelsList = (props) => {
   const { showModal } = props;
-  const { channels, currentChannelId } = useSelector((state) => state);
+  const { channelsList, currentChannelId } = useSelector((state) => state.channels);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const ChannelsList = (props) => {
 
   return (
     <Nav as="ul" className="flex-column nav-pills nav-fill px-2">
-      {channels.map((channel) => (
+      {channelsList.map((channel) => (
         <ChannelButton
           key={channel.id}
           channel={channel}

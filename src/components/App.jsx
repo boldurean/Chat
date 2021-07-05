@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import Chat from './chat/Chat.jsx';
-import LoginPage from './LoginPage.jsx';
-import Page404 from './Page404.jsx';
-import SignupPage from './SignupPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import Error404 from './pages/Error404.jsx';
+import SignupPage from './pages/SignupPage.jsx';
 import authContext from '../contexts/authContext.js';
 import useAuth from '../hooks/useAuth.js';
 
@@ -73,11 +73,11 @@ const App = () => (
           <Route path="/login">
             <LoginPage />
           </Route>
-          <PrivateRoute exact path="/">
+          <PrivateRoute path="/" exact>
             <Chat />
           </PrivateRoute>
           <Route path="/404">
-            <Page404 />
+            <Error404 />
           </Route>
           <Redirect to="/404" />
         </Switch>

@@ -5,9 +5,8 @@ import '../assets/application.scss';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-
+import store from './init.js';
 import App from './components/App.jsx';
-import store from './app/store.js';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';

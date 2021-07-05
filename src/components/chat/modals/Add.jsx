@@ -1,53 +1,45 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-import socket from '../../client/socket.js';
-import { actions } from '../../app/slices';
+import useAPI from '../../../hooks/useAPI.js';
 
 const Add = (props) => {
   const { hideModal } = props;
-  const { switchChannel } = actions;
-  const { channels } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const existingChannelNames = channels.map((c) => c.name);
+  const API = useAPI();
+  const { channelsList } = useSelector((state) => state.channels);
+  const existingChannelNames = channelsList.map((c) => c.name);
 
   const formik = useFormik({
     initialValues: {
       body: '',
     },
+    validationSchema: yup.object().shape({
+      body: yup
+        .string()
+        .min(3, 'Name needs to be from 3 to 20 characters')
+        .max(20, 'Name needs to be from 3 to 20 characters')
+        .notOneOf(existingChannelNames, 'Channel with this name already exists')
+        .required('Required'),
+    }),
     onSubmit: (values) => {
-      const newChannel = { name: values.body };
       try {
-        socket.emit('newChannel', newChannel, (response) => {
-          if (response.status === 'ok') {
-            const { id } = response.data;
-            dispatch(switchChannel(id));
-            hideModal();
-            return;
-          }
-          setTimeout(() => formik.setSubmitting(false), 2000);
-        });
+        API.addChannel({ name: values.body });
       } catch (err) {
         console.log(err);
         throw err;
       }
     },
-
-    validationSchema: yup.object().shape({
-      body: yup
-        .string()
-        .notOneOf(existingChannelNames, 'Channel with this name already exists')
-        .required('Required'),
-    }),
   });
 
   const refEl = useRef();
 
   useEffect(() => {
     refEl.current.focus();
-  }, []);
+    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
+    return () => clearTimeout(timer);
+  }, [formik.isSubmitting]);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
