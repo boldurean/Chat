@@ -15,7 +15,7 @@ export const slice = createSlice({
     renameChannel: (state, action) => {
       const channel = state.channelsList.find((c) => c.id === action.payload.id);
       channel.name = action.payload.name;
-      return { ...state };
+      return state;
     },
     removeChannel: (state, { payload }) => {
       const channelsList = state.channelsList.filter((channel) => channel.id !== payload.id);
