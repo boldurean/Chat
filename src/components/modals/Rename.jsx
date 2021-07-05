@@ -44,16 +44,9 @@ const Rename = (props) => {
   }, []);
 
   return (
-    <Modal
-      show
-      onHide={hideModal}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Rename channel
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Rename channel</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -69,12 +62,8 @@ const Rename = (props) => {
               placeholder="Enter new name"
               disabled={formik.isSubmitting}
             />
-            <Form.Text className="text-muted">
-              Please enter new name
-            </Form.Text>
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.body}
-            </Form.Control.Feedback>
+            <Form.Text className="text-muted">Please enter new name</Form.Text>
+            <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button className="btn btn-secondary mx-2" onClick={hideModal}>

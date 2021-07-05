@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect, Link,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './LoginPage.jsx';
 import Page404 from './Page404.jsx';
@@ -25,9 +20,12 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <authContext.Provider value={{
-      loggedIn, logIn, logOut,
-    }}
+    <authContext.Provider
+      value={{
+        loggedIn,
+        logIn,
+        logOut,
+      }}
     >
       {children}
     </authContext.Provider>
@@ -41,20 +39,20 @@ const PrivateRoute = ({ children, exact, path }) => {
     <Route
       path={path}
       exact={exact}
-      render={({ location }) => (auth.loggedIn
-        ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
+      render={({ location }) =>
+        auth.loggedIn ? (
+          children
+        ) : (
+          <Redirect to={{ pathname: '/login', state: { from: location } }} />
+        )
+      }
     />
   );
 };
 
 const AuthButton = () => {
   const auth = useAuth();
-  return (
-    auth.loggedIn
-      ? <Button onClick={auth.logOut}>Log out</Button>
-      : null
-  );
+  return auth.loggedIn ? <Button onClick={auth.logOut}>Log out</Button> : null;
 };
 
 const App = () => (
@@ -62,7 +60,9 @@ const App = () => (
     <Router>
       <div className="d-flex flex-column h-100">
         <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
-          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            Hexlet Chat
+          </Navbar.Brand>
           <AuthButton />
         </Navbar>
 

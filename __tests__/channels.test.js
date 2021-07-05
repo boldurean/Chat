@@ -17,14 +17,18 @@ test('get /channels', async () => {
       type: 'channels',
       id: expect.any(Number),
       attributes: {
-        id: expect.any(Number), name: 'general', removable: false,
+        id: expect.any(Number),
+        name: 'general',
+        removable: false,
       },
     },
     {
       type: 'channels',
       id: expect.any(Number),
       attributes: {
-        id: expect.any(Number), name: 'random', removable: false,
+        id: expect.any(Number),
+        name: 'random',
+        removable: false,
       },
     },
   ];
@@ -66,9 +70,7 @@ test('post /channels', async () => {
 
 test('delete /channels/:id', async () => {
   const state = {
-    channels: [
-      { id: 100, name: 'custom', removable: true },
-    ],
+    channels: [{ id: 100, name: 'custom', removable: true }],
   };
   const app = buildApp({ state });
   const response = await app.inject({
@@ -80,9 +82,7 @@ test('delete /channels/:id', async () => {
 
 test('patch /channels/:id', async () => {
   const state = {
-    channels: [
-      { id: 100, name: 'custom', removable: true },
-    ],
+    channels: [{ id: 100, name: 'custom', removable: true }],
   };
 
   const app = buildApp({ state });

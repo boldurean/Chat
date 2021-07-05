@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Button,
-  ButtonGroup, Dropdown, Nav,
-} from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../app/slices';
 import fetchChatData from '../../app/slices/fetchData.js';
@@ -10,9 +7,7 @@ import fetchChatData from '../../app/slices/fetchData.js';
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
   const dispatch = useDispatch();
   const { switchChannel } = actions;
-  const buttonType = channel.id === currentChannelId
-    ? 'btn btn-secondary'
-    : 'btn';
+  const buttonType = channel.id === currentChannelId ? 'btn btn-secondary' : 'btn';
 
   if (!channel.removable) {
     return (
@@ -31,10 +26,7 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 
   return (
     <Nav.Item as="li" bsPrefix="nav-item w-100">
-      <Dropdown
-        as={ButtonGroup}
-        className="d-flex"
-      >
+      <Dropdown as={ButtonGroup} className="d-flex">
         <Button
           variant={buttonType}
           className="w-100 rounded-0 text-start text-truncate"
@@ -47,14 +39,8 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
         <Dropdown.Toggle split variant={buttonType} id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={() => showModal('renaming', channel)}
-          >
-            Rename
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => showModal('removing', channel)}
-          >
+          <Dropdown.Item onClick={() => showModal('renaming', channel)}>Rename</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('removing', channel)}>
             Delete channel
           </Dropdown.Item>
         </Dropdown.Menu>

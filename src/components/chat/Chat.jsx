@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Col, Container, Row,
-} from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import AddChannelButton from './AddChannelButton.jsx';
 import Channels from './ChannelsList.jsx';
 import MessagesBox from './MessagesBox.jsx';

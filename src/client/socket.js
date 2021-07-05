@@ -6,9 +6,8 @@ import E from './events.js';
 const URL = window.location.host;
 const socket = io.connect(URL);
 
-const {
-  newMessage, newChannel, removeChannel, renameChannel, clearMessages, switchChannel,
-} = actions;
+const { newMessage, newChannel, removeChannel, renameChannel, clearMessages, switchChannel } =
+  actions;
 
 socket.on(E.NEW_MESSAGE, (data) => {
   store.dispatch(newMessage(data));

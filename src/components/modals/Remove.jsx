@@ -25,32 +25,18 @@ const Remove = (props) => {
   };
 
   return (
-    <Modal
-      show
-      onHide={hideModal}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add new channel
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Add new channel</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>Are you sure you want to remove this channel?</p>
         <Form onSubmit={handleSubmit}>
           <div className="d-flex justify-content-end">
-            <Button
-              className="btn btn-secondary mx-2"
-              onClick={hideModal}
-              disabled={isSubmitting}
-            >
+            <Button className="btn btn-secondary mx-2" onClick={hideModal} disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button
-              variant="danger"
-              type="submit"
-            >
+            <Button variant="danger" type="submit">
               Remove
             </Button>
           </div>

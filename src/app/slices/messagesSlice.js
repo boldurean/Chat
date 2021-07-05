@@ -13,15 +13,18 @@ const slice = createSlice({
     },
     clearMessages: () => {
       const newState = {
-        text: 'Messages deleted', id: Math.random(), channelId: 1, username: 'admin',
+        text: 'Messages deleted',
+        id: Math.random(),
+        channelId: 1,
+        username: 'admin',
       };
       return [newState];
     },
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],
-    [removeChannel]: (state, action) => state
-      .filter((message) => message.channelId !== action.payload.id),
+    [removeChannel]: (state, action) =>
+      state.filter((message) => message.channelId !== action.payload.id),
   },
 });
 
