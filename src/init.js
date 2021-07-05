@@ -1,6 +1,6 @@
 import E from './api/events.js';
 import socket from './api/socket.js';
-import { actions } from './slices';
+import { actions } from './slices/index.js';
 import createStore from './store.js';
 
 const store = createStore();
