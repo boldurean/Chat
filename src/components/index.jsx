@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router, Switch, Route, Redirect, Link,
 } from 'react-router-dom';

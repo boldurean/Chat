@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import E from './api/events.js';
 import socket from './api/socket.js';
-import App from './components';
-import i18n from './locales';
+import App from './components/index.jsx';
 import { actions } from './slices/index.js';
 import createStore from './store.js';
 
