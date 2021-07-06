@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './pages/LoginPage.jsx';
@@ -51,8 +52,9 @@ const PrivateRoute = ({ children, exact, path }) => {
 };
 
 const AuthButton = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
-  return auth.loggedIn ? <Button onClick={auth.logOut}>Log out</Button> : null;
+  return auth.loggedIn ? <Button onClick={auth.logOut}>{t('buttons.logout')}</Button> : null;
 };
 
 const App = () => (

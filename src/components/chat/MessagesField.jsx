@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { Button, ButtonGroup, Form, FormControl, InputGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import useAPI from '../../hooks/useAPI.js';
 
@@ -8,6 +9,7 @@ const MessagesField = () => {
   const API = useAPI();
   const { username } = JSON.parse(localStorage.getItem('userId'));
   const { currentChannelId } = useSelector((state) => state.channels);
+  const { t } = useTranslation();
   const inputRef = useRef();
 
   const formik = useFormik({
@@ -46,7 +48,7 @@ const MessagesField = () => {
             disabled={formik.isSubmitting}
             value={formik.values.body}
             onChange={formik.handleChange}
-            placeholder="Message"
+            placeholder={t('messages.enterMessage')}
           />
           <InputGroup.Text>
             <ButtonGroup size="sm">

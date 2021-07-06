@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import AddChannelButton from './AddChannelButton.jsx';
 import Channels from './ChannelsList.jsx';
 import MessagesBox from './MessagesBox.jsx';
@@ -17,6 +18,7 @@ const renderModal = ({ modal, hideModal }) => {
 
 const Chat = () => {
   const [modal, setModal] = useState({ type: null, channel: null });
+  const { t } = useTranslation();
   const hideModal = () => setModal({ type: null, channel: null });
   const showModal = (type, channel = null) => setModal({ type, channel });
 
@@ -26,7 +28,7 @@ const Chat = () => {
         <Row bsPrefix="row h-100 bg-white flex-md-row">
           <Col bsPrefix="col-4 col-md-3 col-lg-2 border-end pt-5 px-0 bg-light overflow-auto h-100">
             <div className="d-flex justify-content-between mb-2 ps-2 pe-2">
-              <span>Channels</span>
+              <span>{t('channels.channels')}</span>
               <AddChannelButton showModal={showModal} />
             </div>
             <Channels showModal={showModal} />

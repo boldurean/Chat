@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import useAPI from '../../../hooks/useAPI.js';
 
 const Remove = (props) => {
-  const { hideModal, modal } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { hideModal, modal } = props;
+  const { t } = useTranslation();
   const API = useAPI();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,17 +28,17 @@ const Remove = (props) => {
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Add new channel</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('channels.remove')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to remove this channel?</p>
+        <p>{t('channels.removeConfirmation')}</p>
         <Form onSubmit={handleSubmit}>
           <div className="d-flex justify-content-end">
             <Button disabled={isSubmitting} className="btn btn-secondary mx-2" onClick={hideModal}>
-              Cancel
+              {t('buttons.cancel')}
             </Button>
             <Button disabled={isSubmitting} variant="danger" type="submit">
-              Remove
+              {t('buttons.remove')}
             </Button>
           </div>
         </Form>

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import socket from '../../api/socket.js';
 import E from '../../api/events.js';
 
 const MessagesCounter = () => {
+  const { t } = useTranslation();
   const { username } = JSON.parse(localStorage.getItem('userId'));
 
   const AdminButton = () => {
@@ -19,7 +21,11 @@ const MessagesCounter = () => {
     );
   };
 
-  const { channelsList, currentChannelId } = useSelector((state) => state.channels);
+  const {
+    channels: { channelsList, currentChannelId },
+    messages,
+  } = useSelector((state) => state);
+  const count = messages.filter((m) => m.channelId === currentChannelId).length;
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small d-flex justify-content-between">
       <div>
@@ -33,7 +39,7 @@ const MessagesCounter = () => {
             }, '# ')}
           </b>
         </p>
-        <span className="text-muted">0 сообщений</span>
+        <span className="text-muted">{t('messages.counter.key', { count })}</span>
       </div>
       <div>
         <AdminButton />

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../slices';
 import fetchChatData from '../../slices/fetchData.js';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { switchChannel } = actions;
   const buttonType = channel.id === currentChannelId ? 'btn btn-secondary' : 'btn';
@@ -40,9 +42,11 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => showModal('removing', channel)}>
-            Delete channel
+            {t('buttons.remove')}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => showModal('renaming', channel)}>Rename</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('renaming', channel)}>
+            {t('buttons.rename')}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Nav.Item>

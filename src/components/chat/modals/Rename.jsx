@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useAPI from '../../../hooks/useAPI.js';
 
 const Rename = (props) => {
   const { modal, hideModal } = props;
+  const { t } = useTranslation();
   const { channelsList } = useSelector((state) => state.channels);
   const existingChannelNames = channelsList.map((c) => c.name);
   const { channel } = modal;
@@ -19,11 +21,14 @@ const Rename = (props) => {
     validationSchema: yup.object().shape({
       body: yup
         .string()
-        .min(3, 'Name needs to be from 3 to 20 characters')
-        .max(20, 'Name needs to be from 3 to 20 characters')
-        .notOneOf(existingChannelNames, 'Channel with this name already exists')
-        .required('Required'),
+        .min(3, t('errors.fromTo', { min: 3, max: 20 }))
+        .max(20, t('errors.fromTo', { min: 3, max: 20 }))
+        .notOneOf(existingChannelNames, t('errors.notOneOf'))
+        .required(t('errors.required')),
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
+
     onSubmit: (values) => {
       try {
         API.renameChannel({ id: channel.id, name: values.body });
@@ -45,7 +50,7 @@ const Rename = (props) => {
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Rename channel</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('channels.rename')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -61,19 +66,18 @@ const Rename = (props) => {
               placeholder="Enter new name"
               disabled={formik.isSubmitting}
             />
-            <Form.Text className="text-muted">Please enter new name</Form.Text>
             <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button className="btn btn-secondary mx-2" onClick={hideModal}>
-              Cancel
+              {t('buttons.cancel')}
             </Button>
             <Button
               variant="primary"
               type="submit"
               disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
             >
-              Rename
+              {t('buttons.rename')}
             </Button>
           </div>
         </Form>
