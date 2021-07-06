@@ -46,6 +46,7 @@ const LoginPage = () => {
           inputRef.current.select();
           return;
         }
+        rollbar.err('Auth error', err);
         throw err;
       }
     },
