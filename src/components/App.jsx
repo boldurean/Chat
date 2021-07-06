@@ -8,6 +8,7 @@ import Error404 from './pages/Error404.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import authContext from '../contexts/authContext.js';
 import useAuth from '../hooks/useAuth.js';
+import RollbarProvider from '../Rollbar.jsx';
 
 const hasToken = JSON.parse(localStorage.getItem('userId')) !== null;
 
@@ -58,34 +59,36 @@ const AuthButton = () => {
 };
 
 const App = () => (
-  <AuthProvider>
-    <Router>
-      <div className="d-flex flex-column h-100">
-        <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
-          <Navbar.Brand as={Link} to="/">
-            Hexlet Chat
-          </Navbar.Brand>
-          <AuthButton />
-        </Navbar>
+  <RollbarProvider>
+    <AuthProvider>
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
+            <Navbar.Brand as={Link} to="/">
+              Hexlet Chat
+            </Navbar.Brand>
+            <AuthButton />
+          </Navbar>
 
-        <Switch>
-          <Route path="/signup">
-            <SignupPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <PrivateRoute path="/" exact>
-            <Chat />
-          </PrivateRoute>
-          <Route path="/404">
-            <Error404 />
-          </Route>
-          <Redirect to="/404" />
-        </Switch>
-      </div>
-    </Router>
-  </AuthProvider>
+          <Switch>
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/" exact>
+              <Chat />
+            </PrivateRoute>
+            <Route path="/404">
+              <Error404 />
+            </Route>
+            <Redirect to="/404" />
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
+  </RollbarProvider>
 );
 
 export default App;
