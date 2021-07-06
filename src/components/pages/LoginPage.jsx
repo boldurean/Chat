@@ -1,4 +1,3 @@
-import { useRollbar } from '@rollbar/react';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Container, Form, Row } from 'react-bootstrap';
@@ -9,6 +8,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth.js';
 import routes from '../../routes.js';
+import rollbar from '../../Rollbar.js';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -17,7 +17,6 @@ const LoginPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
-  const rollbar = useRollbar();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -46,6 +45,7 @@ const LoginPage = () => {
           inputRef.current.select();
           return;
         }
+        rollbar.error(err);
         throw err;
       }
     },
