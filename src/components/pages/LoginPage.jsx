@@ -43,12 +43,9 @@ const LoginPage = () => {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
-          rollbar.error(err);
-          rollbar.log('test error');
           return;
         }
         rollbar.error(err);
-        rollbar.log('test error');
         throw err;
       }
     },
