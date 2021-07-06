@@ -21,7 +21,6 @@ export default () => {
   });
 
   socket.on(E.NEW_CHANNEL, (data) => {
-    console.log(data);
     store.dispatch(newChannel(data));
   });
 
