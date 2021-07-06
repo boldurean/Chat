@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useAPI from '../../../hooks/useAPI.js';
+import rollbar from '../../../Rollbar.js';
 
 const Add = (props) => {
   const { hideModal } = props;
@@ -33,6 +34,7 @@ const Add = (props) => {
         API.addChannel({ name: values.body });
       } catch (err) {
         console.log(err);
+        rollbar.error(err);
         throw err;
       }
     },

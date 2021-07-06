@@ -7,7 +7,7 @@ import MessagesBox from './MessagesBox.jsx';
 import MessagesCounter from './MessagesCounter.jsx';
 import MessagesField from './MessagesField.jsx';
 import getModal from './modals/index.js';
-import ApiProvider from './ApiProvider.jsx';
+import ApiProvider from '../../api/ApiProvider.jsx';
 
 const renderModal = ({ modal, hideModal }) => {
   if (!modal.type) return null;

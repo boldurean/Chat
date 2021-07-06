@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../../hooks/useAuth.js';
+import rollbar from '../../Rollbar.js';
 import routes from '../../routes.js';
 
 const SignupPage = () => {
@@ -57,8 +58,10 @@ const SignupPage = () => {
         if (err.isAxiosError && err.response.status === 409) {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
+          rollbar.error(err);
           return;
         }
+        rollbar.error(err);
         throw err;
       }
     },

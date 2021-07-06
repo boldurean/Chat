@@ -44,7 +44,6 @@ const LoginPage = () => {
           setAuthFailed(true);
           inputRef.current.select();
           rollbar.error(err);
-          rollbar.log('test err');
           return;
         }
         rollbar.error(err);

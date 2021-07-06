@@ -1,9 +1,12 @@
 import Rollbar from 'rollbar';
 
 const rollbar = new Rollbar({
-  accessToken: '980e4a1b2f9e4983816a35d5e81411b9',
+  accessToken: 'c175e2e0d982418d8cc234a34954c833',
   captureUncaught: true,
   captureUnhandledRejections: true,
+  payload: {
+    environment: 'production',
+  },
 });
 
 export default rollbar;

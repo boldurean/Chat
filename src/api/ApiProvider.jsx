@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../slices/index.js';
-import socket from '../../api/socket.js';
-import apiContext from '../../contexts/apiContext.js';
-import E from '../../api/events.js';
+import { actions } from '../slices';
+import socket from './socket.js';
+import apiContext from '../contexts/apiContext.js';
+import E from './events.js';
 
 const ApiProvider = ({ children, hideModal }) => {
   const { switchChannel } = actions;

@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import rollbar from '../Rollbar.js';
 import routes from '../routes.js';
 
 export const fetchingDataRequest = createAction('FETCH_DATA_REQUEST');
@@ -18,8 +19,8 @@ const fetchChatData = () => async (dispatch) => {
       });
       dispatch(fetchingDataSuccess({ ...req.data }));
     } catch (e) {
-      console.log(e);
       dispatch(fetchingDataFailure());
+      rollbar.error(e);
       throw e;
     }
   }

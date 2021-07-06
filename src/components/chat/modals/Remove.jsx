@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAPI from '../../../hooks/useAPI.js';
+import rollbar from '../../../Rollbar.js';
 
 const Remove = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,6 +17,7 @@ const Remove = (props) => {
       API.removeChannel(channel);
     } catch (err) {
       console.log(err);
+      rollbar.error(err);
       throw err;
     }
   };
