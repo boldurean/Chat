@@ -43,6 +43,7 @@ const MessagesField = () => {
         <InputGroup className="mb-3">
           <FormControl
             required
+            data-testid="new-message"
             ref={inputRef}
             name="body"
             disabled={formik.isSubmitting}

@@ -26,8 +26,6 @@ const Add = (props) => {
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
         .required(t('errors.required')),
     }),
-    validateOnChange: false,
-    validateOnBlur: false,
 
     onSubmit: (values) => {
       try {
@@ -58,6 +56,7 @@ const Add = (props) => {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               name="body"
+              data-testid="add-channel"
               ref={refEl}
               value={formik.values.body}
               onChange={formik.handleChange}
@@ -78,7 +77,7 @@ const Add = (props) => {
               type="submit"
               disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
             >
-              {t('buttons.add')}
+              {t('buttons.send')}
             </Button>
           </div>
         </Form>

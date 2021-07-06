@@ -27,8 +27,6 @@ const Rename = (props) => {
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
         .required(t('errors.required')),
     }),
-    validateOnChange: false,
-    validateOnBlur: false,
 
     onSubmit: (values) => {
       try {
@@ -59,6 +57,7 @@ const Rename = (props) => {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               name="body"
+              data-testid="rename-channel"
               ref={refEl}
               value={formik.values.body}
               onChange={formik.handleChange}
@@ -79,7 +78,7 @@ const Rename = (props) => {
               type="submit"
               disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
             >
-              {t('buttons.rename')}
+              {t('buttons.send')}
             </Button>
           </div>
         </Form>
