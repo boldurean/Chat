@@ -43,6 +43,7 @@ const LoginPage = () => {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
+          rollbar.error(err);
           return;
         }
         rollbar.error(err);
