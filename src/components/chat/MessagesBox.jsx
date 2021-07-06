@@ -10,8 +10,8 @@ const MessagesBox = () => {
 
   return (
     <div id="message-box" className="chat-messages overflow-auto px-5 ">
-      {currentChannelMessages.length > 0 &&
-        currentChannelMessages.map((msg) => (
+      {currentChannelMessages.length > 0
+        && currentChannelMessages.map((msg) => (
           <div key={msg.id} className="text-break mb-2">
             <b>{`${msg.username}: `}</b>
             {msg.text}

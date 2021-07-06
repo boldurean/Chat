@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Switch, Route, Redirect, Link,
+} from 'react-router-dom';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import Error404 from './pages/Error404.jsx';
@@ -40,13 +42,11 @@ const PrivateRoute = ({ children, exact, path }) => {
     <Route
       path={path}
       exact={exact}
-      render={({ location }) =>
-        auth.loggedIn ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: '/login', state: { from: location } }} />
-        )
-      }
+      render={({ location }) => (auth.loggedIn ? (
+        children
+      ) : (
+        <Redirect to={{ pathname: '/login', state: { from: location } }} />
+      ))}
     />
   );
 };

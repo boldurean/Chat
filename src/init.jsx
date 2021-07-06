@@ -10,7 +10,9 @@ import createStore from './store.js';
 
 const store = createStore();
 
-const { newMessage, newChannel, removeChannel, renameChannel, clearMessages } = actions;
+const {
+  newMessage, newChannel, removeChannel, renameChannel, clearMessages,
+} = actions;
 
 socket.on(E.NEW_MESSAGE, (data) => {
   store.dispatch(newMessage(data));

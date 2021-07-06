@@ -11,8 +11,8 @@ const Error404 = () => {
           alt="rick-roll"
         />
       </div>
-      <button onClick={() => history.goBack()} className="btn btn-info mt-2" type="button" to="/">
-        back
+      <button onClick={() => history.push('/')} className="btn btn-info mt-2" type="button" to="/">
+        main
       </button>
     </div>
   );

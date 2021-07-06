@@ -42,12 +42,6 @@ export default (app, defaultState = {}) => {
   app.io.on('connect', (socket) => {
     console.log({ 'socket.id': socket.id });
 
-    socket.on('clearMessages', (acknowledge = _.noop) => {
-      state.messages = [];
-      acknowledge({ status: 'ok' });
-      app.io.emit('clearMessages', 'Messages has been deleted');
-    });
-
     socket.on('newMessage', (message, acknowledge = _.noop) => {
       const messageWithId = {
         ...message,

@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import { Button, ButtonGroup, Form, FormControl, InputGroup } from 'react-bootstrap';
+import {
+  Button, ButtonGroup, Form, FormControl, InputGroup,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import useAPI from '../../hooks/useAPI.js';

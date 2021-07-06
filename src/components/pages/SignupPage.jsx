@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Card, Container, Form, Row } from 'react-bootstrap';
+import {
+  Button, Card, Container, Form, Row,
+} from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';

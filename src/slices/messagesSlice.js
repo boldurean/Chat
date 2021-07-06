@@ -23,8 +23,8 @@ const slice = createSlice({
   },
   extraReducers: {
     [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],
-    [removeChannel]: (state, action) =>
-      state.filter((message) => message.channelId !== action.payload.id),
+    [removeChannel]: (state, action) => state
+      .filter((message) => message.channelId !== action.payload.id),
   },
 });
 

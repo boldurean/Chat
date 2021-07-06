@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Card, Container, Form, Row } from 'react-bootstrap';
+import {
+  Button, Card, Container, Form, Row,
+} from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -114,7 +116,10 @@ const LoginPage = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>{t('texts.do not have an account?')} </span>
+                <span>
+                  {t('texts.do not have an account?')}
+                  {' '}
+                </span>
                 <Link to="signup">{t('texts.register')}</Link>
               </div>
             </Card.Footer>
