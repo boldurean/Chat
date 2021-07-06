@@ -4,7 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import E from './api/events.js';
 import socket from './api/socket.js';
-import App from './components/App.jsx';
+import App from './components';
 import i18n from './locales';
 import { actions } from './slices/index.js';
 import createStore from './store.js';
@@ -33,11 +33,9 @@ export default () => {
   });
 
   ReactDOM.render(
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </I18nextProvider>,
+    <Provider store={store}>
+      <App />
+    </Provider>,
     document.getElementById('chat'),
   );
 };

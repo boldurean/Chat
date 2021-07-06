@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Navbar } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { I18nextProvider, useTranslation } from 'react-i18next';
+import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router, Switch, Route, Redirect, Link,
 } from 'react-router-dom';
+import i18n from '../locales';
 import Chat from './chat/Chat.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import Error404 from './pages/Error404.jsx';
@@ -57,35 +59,35 @@ const AuthButton = () => {
   return auth.loggedIn ? <Button onClick={auth.logOut}>{t('buttons.logout')}</Button> : null;
 };
 
-const App = () => (
-  <AuthProvider>
-    <Router>
-      <div className="d-flex flex-column h-100">
-        <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
-          <Navbar.Brand as={Link} to="/">
-            Hexlet-Chat
-          </Navbar.Brand>
-          <AuthButton />
-        </Navbar>
+export default () => (
+  <I18nextProvider i18n={i18n}>
+    <AuthProvider>
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
+            <Navbar.Brand as={Link} to="/">
+              Hexlet-Chat
+            </Navbar.Brand>
+            <AuthButton />
+          </Navbar>
 
-        <Switch>
-          <Route path="/signup">
-            <SignupPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <PrivateRoute path="/" exact>
-            <Chat />
-          </PrivateRoute>
-          <Route path="/404">
-            <Error404 />
-          </Route>
-          <Redirect to="/404" />
-        </Switch>
-      </div>
-    </Router>
-  </AuthProvider>
+          <Switch>
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/" exact>
+              <Chat />
+            </PrivateRoute>
+            <Route path="/404">
+              <Error404 />
+            </Route>
+            <Redirect to="/404" />
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
+  </I18nextProvider>
 );
-
-export default App;
