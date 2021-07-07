@@ -19,13 +19,12 @@ const MessagesField = () => {
       body: '',
     },
     onSubmit: (values) => {
-      const { resetForm } = formik;
-      try {
-        API.newMessage({ text: values.body, channelId: currentChannelId, username }, resetForm);
-      } catch (err) {
-        console.log(err);
-        throw err;
-      }
+      API.newMessage({ text: values.body, channelId: currentChannelId, username })
+        .then(formik.resetForm)
+        .catch((err) => {
+          console.error(err);
+          return err;
+        });
     },
   });
 

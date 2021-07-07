@@ -28,15 +28,13 @@ const Rename = (props) => {
         .required(t('errors.required')),
     }),
 
-    onSubmit: (values) => {
-      try {
-        API.renameChannel({ id: channel.id, name: values.body });
-      } catch (err) {
-        console.log(err);
+    onSubmit: async (values) => API.renameChannel({ id: channel.id, name: values.body })
+      .then(hideModal)
+      .catch((err) => {
+        console.error(err);
         rollbar.error(err);
-        throw err;
-      }
-    },
+        return err;
+      }),
   });
 
   const refEl = useRef();

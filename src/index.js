@@ -2,16 +2,18 @@
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
-import React from 'react';
 import { render } from 'react-dom';
-import App from './init.jsx';
+import socket from './api/socket.js';
+import init from './init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
+const vdom = init(socket);
+
 render(
-  <App />,
+  vdom,
   document.getElementById('chat'),
 );
 

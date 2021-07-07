@@ -2,17 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useAPI from '../../../hooks/useAPI.js';
 import rollbar from '../../../Rollbar.js';
+import { actions } from '../../../slices';
 
 const Add = (props) => {
   const { hideModal } = props;
   const API = useAPI();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { channelsList } = useSelector((state) => state.channels);
   const existingChannelNames = channelsList.map((c) => c.name);
+  const { switchChannel } = actions;
 
   const formik = useFormik({
     initialValues: {
@@ -27,15 +30,15 @@ const Add = (props) => {
         .required(t('errors.required')),
     }),
 
-    onSubmit: (values) => {
-      try {
-        API.addChannel({ name: values.body });
-      } catch (err) {
-        console.log(err);
+    onSubmit: (values) => API.newChannel({ name: values.body })
+      .then(({ id }) => {
+        dispatch(switchChannel(id));
+        hideModal();
+      }).catch((err) => {
+        console.error(err);
         rollbar.error(err);
-        throw err;
-      }
-    },
+        return err;
+      }),
   });
 
   const refEl = useRef();

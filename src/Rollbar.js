@@ -7,6 +7,7 @@ const rollbar = new Rollbar({
   payload: {
     environment: 'production',
   },
+  enabled: process.env.NODE_ENV === 'production',
 });
 
 export default rollbar;

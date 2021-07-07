@@ -9,17 +9,19 @@ const Remove = (props) => {
   const { hideModal, modal } = props;
   const { t } = useTranslation();
   const API = useAPI();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { channel } = modal;
     setIsSubmitting(true);
-    try {
-      API.removeChannel(channel);
-    } catch (err) {
-      console.log(err);
-      rollbar.error(err);
-      throw err;
-    }
+    return API.removeChannel(channel)
+      .then(hideModal)
+      .catch((err) => {
+        setIsSubmitting(false);
+        console.error(err);
+        rollbar.error(err);
+        return err;
+      });
   };
 
   useEffect(() => {
