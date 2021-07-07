@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import rollbar from '../Rollbar.js';
 import { actions } from '../slices';
 import socket from './socket.js';
 import apiContext from '../contexts/apiContext.js';
@@ -10,14 +11,20 @@ const ApiProvider = ({ children, hideModal }) => {
   const dispatch = useDispatch();
 
   const addChannel = (values) => {
-    socket.volatile.emit(E.NEW_CHANNEL, values, (response) => {
-      if (!response.status) throw new Error('network offline');
-      if (response.status === 'ok') {
-        const { id } = response.data;
-        dispatch(switchChannel(id));
-        hideModal();
-      }
-    });
+    try {
+      socket.volatile.emit(E.NEW_CHANNEL, values, (response) => {
+        if (!response.status) throw new Error('network offline');
+        if (response.status === 'ok') {
+          const { id } = response.data;
+          dispatch(switchChannel(id));
+          hideModal();
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      rollbar.error(err);
+      throw err;
+    }
   };
 
   const removeChannel = (values) => {
