@@ -43,10 +43,10 @@ const LoginPage = () => {
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        if (formik.isSubmitting && (err.isAxiosError && err.response.status === 401)) {
-          setAuthFailed(true);
+        if (err.isAxiosError && err.response.status === 401) {
           inputRef.current.select();
           rollbar.error(err);
+          setAuthFailed(true);
           return;
         }
         rollbar.error(err);
@@ -96,9 +96,11 @@ const LoginPage = () => {
                     placeholder={t('forms.password')}
                     isInvalid={authFailed}
                   />
+                  {authFailed && (
                   <Form.Control.Feedback type="invalid" tooltip>
                     {t('errors.auth')}
                   </Form.Control.Feedback>
+                  )}
                 </FloatingLabel>
                 <Button className="w-100 mb-3" variant="outline-primary" type="submit">
                   {t('buttons.login')}
