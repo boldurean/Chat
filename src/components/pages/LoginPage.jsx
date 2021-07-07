@@ -44,12 +44,13 @@ const LoginPage = () => {
         history.replace(from);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
           inputRef.current.select();
           rollbar.error(err);
-          setAuthFailed(true);
           return;
         }
         rollbar.error(err);
+        console.error(err);
         throw err;
       }
     },

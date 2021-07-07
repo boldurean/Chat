@@ -48,7 +48,6 @@ const SignupPage = () => {
       setUserExisting(false);
       try {
         const res = await axios.post(routes.signupPath(), values);
-        console.log(res);
         localStorage.setItem('userId', JSON.stringify(res.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
@@ -62,9 +61,11 @@ const SignupPage = () => {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
           rollbar.error(err);
+          console.error(err);
           return;
         }
         rollbar.error(err);
+        console.error(err);
         throw err;
       }
     },
@@ -136,9 +137,11 @@ const SignupPage = () => {
                     placeholder={t('forms.passwordConfirmation')}
                     isInvalid={!!formik.errors.passwordConfirmation || userCreated || userExisting}
                   />
+                  {formik.errors.passwordConfirmation && (
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.passwordConfirmation}
                   </Form.Control.Feedback>
+                  )}
                 </FloatingLabel>
                 <Button className="w-100 mb-3" variant="outline-primary" type="submit">
                   {t('buttons.signup')}
