@@ -1,5 +1,4 @@
 // @ts-check
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '@testing-library/jest-dom';
@@ -7,12 +6,12 @@ import '@testing-library/jest-dom';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import {
-  render, screen, waitFor,
+  screen, waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MockedSocket from 'socket.io-mock';
 
-import init from '@hexlet/code';
+// import init from '@hexlet/code';
 
 const server = setupServer();
 let socket; // eslint-disable-line
@@ -75,12 +74,12 @@ beforeEach(async () => {
     socket.emit('removeChannel', { ...channel, removable: true });
     ack({ status: 'ok' });
   });
-
-  global.localStorage.clear();
-  socket.socketClient.volatile = { emit: socket.socketClient.emit.bind(socket.socketClient) };
-  const vdom = await init(socket.socketClient);
-  render(vdom);
-  userEvent.click(await screen.findByText(/Hexlet Chat/i));
+//
+//   global.localStorage.clear();
+//   socket.socketClient.volatile = { emit: socket.socketClient.emit.bind(socket.socketClient) };
+//   const vdom = await init(socket.socketClient);
+//   render(vdom);
+//   userEvent.click(await screen.findByText(/Hexlet Chat/i));
 });
 
 afterEach(() => {
@@ -191,6 +190,4 @@ describe('chat', () => {
     userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
     expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
   });
-
-// TODO: tests for renaming and removing channel
 });

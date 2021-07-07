@@ -43,7 +43,7 @@ const LoginPage = () => {
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        if (err.isAxiosError && err.response.status === 401) {
+        if (err.isAxiosError && err.response.status === 401 && formik.isSubmitting) {
           setAuthFailed(true);
           inputRef.current.select();
           rollbar.error(err);
