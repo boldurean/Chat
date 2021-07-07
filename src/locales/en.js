@@ -7,7 +7,7 @@ export default {
     buttons: {
       login: 'Log in',
       logout: 'Log out',
-      signup: 'Sign Up',
+      signup: 'Sign up',
       add: 'Add',
       cancel: 'Cancel',
       rename: 'Rename',

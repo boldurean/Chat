@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchingDataSuccess } from './fetchData.js';
-import { actions as channelsSliceActions } from './channelsSlice.js';
+import { actions as channelsSliceActions } from './channels.js';
 
 const { removeChannel } = channelsSliceActions;
 

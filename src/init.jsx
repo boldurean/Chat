@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import E from './api/events.js';
 import socket from './api/socket.js';
-import App from './components/index.jsx';
+import Component from './components/index.jsx';
 import { actions } from './slices/index.js';
 import createStore from './store.js';
 
@@ -30,10 +29,9 @@ export default () => {
     store.dispatch(renameChannel(data));
   });
 
-  ReactDOM.render(
+  return (
     <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById('chat'),
+      <Component />
+    </Provider>
   );
 };

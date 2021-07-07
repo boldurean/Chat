@@ -2,12 +2,17 @@
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
-import runApp from './init.jsx';
+import React from 'react';
+import { render } from 'react-dom';
+import App from './init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-runApp();
+render(
+  <App />,
+  document.getElementById('chat'),
+);
 
 console.log('it works!');
