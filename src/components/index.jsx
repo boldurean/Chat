@@ -57,7 +57,7 @@ const AuthButton = () => {
   return auth.loggedIn ? <Button onClick={auth.logOut}>{t('buttons.logout')}</Button> : null;
 };
 
-export default () => (
+const Component = () => (
   <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
@@ -87,3 +87,5 @@ export default () => (
     </Router>
   </AuthProvider>
 );
+
+export default Component;

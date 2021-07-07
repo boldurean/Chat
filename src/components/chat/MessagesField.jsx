@@ -36,7 +36,7 @@ const MessagesField = () => {
     inputRef.current.focus();
     const timer = setTimeout(() => formik.setSubmitting(false), 2000);
     return () => clearTimeout(timer);
-  }, [formik.isSubmitting]);
+  }, [formik]);
 
   return (
     <div className="mt-auto px-5 py-3">

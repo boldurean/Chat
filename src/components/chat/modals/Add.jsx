@@ -47,7 +47,7 @@ const Add = (props) => {
     refEl.current.focus();
     const timer = setTimeout(() => formik.setSubmitting(false), 2000);
     return () => clearTimeout(timer);
-  }, [formik.isSubmitting]);
+  }, [formik]);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
