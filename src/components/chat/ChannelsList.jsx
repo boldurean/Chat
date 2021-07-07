@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../slices';
+import fetchChatData from '../../slices/fetchData.js';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
   const { t } = useTranslation();
@@ -57,6 +58,11 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 const ChannelsList = (props) => {
   const { showModal } = props;
   const { channelsList, currentChannelId } = useSelector((state) => state.channels);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchChatData());
+  }, [dispatch]);
 
   return (
     <Nav as="ul" className="flex-column nav-pills nav-fill px-2">

@@ -28,15 +28,15 @@ const MessagesField = () => {
     },
   });
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, [currentChannelId]);
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // }, [currentChannelId]);
 
   useEffect(() => {
     inputRef.current.focus();
     const timer = setTimeout(() => formik.setSubmitting(false), 2000);
     return () => clearTimeout(timer);
-  }, [formik]);
+  }, [formik, currentChannelId]);
 
   return (
     <div className="mt-auto px-5 py-3">

@@ -6,14 +6,11 @@ import ApiProvider from './api/ApiProvider.jsx';
 import E from './api/events.js';
 import Component from './components/index.jsx';
 import i18n from './locales';
-import fetchChatData from './slices/fetchData.js';
 import { actions } from './slices/index.js';
 import createStore from './store.js';
 
 const Init = (socket) => {
   const store = createStore();
-
-  store.dispatch(fetchChatData());
 
   const {
     newMessage, newChannel, removeChannel, renameChannel,
