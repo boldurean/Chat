@@ -14,10 +14,10 @@ import routes from '../../routes.js';
 import logo from '../../img/register.jpg';
 
 const SignupPage = () => {
-  const auth = useAuth();
-  const { t } = useTranslation();
   const [userCreated, setUserCreated] = useState(false);
   const [userExisting, setUserExisting] = useState(false);
+  const auth = useAuth();
+  const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
