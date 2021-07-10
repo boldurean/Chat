@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import useAPI from '../../../hooks/useAPI.js';
@@ -23,11 +23,6 @@ const Remove = (props) => {
         return err;
       });
   };
-
-  useEffect(() => {
-    const timerId = setTimeout(() => setIsSubmitting(false), 2000);
-    return () => clearTimeout(timerId);
-  }, [isSubmitting]);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>

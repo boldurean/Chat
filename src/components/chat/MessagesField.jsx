@@ -22,21 +22,16 @@ const MessagesField = () => {
       API.newMessage({ text: values.body, channelId: currentChannelId, username })
         .then(formik.resetForm)
         .catch((err) => {
+          formik.setSubmitting(false);
           console.error(err);
           return err;
         });
     },
   });
 
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // }, [currentChannelId]);
-
   useEffect(() => {
     inputRef.current.focus();
-    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
-    return () => clearTimeout(timer);
-  }, [formik, currentChannelId]);
+  }, []);
 
   return (
     <div className="mt-auto px-5 py-3">

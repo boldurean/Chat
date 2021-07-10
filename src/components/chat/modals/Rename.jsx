@@ -27,6 +27,8 @@ const Rename = (props) => {
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
         .required(t('errors.required')),
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
 
     onSubmit: async (values) => API.renameChannel({ id: channel.id, name: values.body })
       .then(hideModal)
@@ -41,9 +43,7 @@ const Rename = (props) => {
 
   useEffect(() => {
     refEl.current.select();
-    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
-    return () => clearTimeout(timer);
-  }, [formik]);
+  }, []);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -74,7 +74,7 @@ const Rename = (props) => {
             <Button
               variant="primary"
               type="submit"
-              disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
+              disabled={formik.isSubmitting}
             >
               {t('buttons.send')}
             </Button>

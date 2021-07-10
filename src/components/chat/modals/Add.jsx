@@ -29,6 +29,8 @@ const Add = (props) => {
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
         .required(t('errors.required')),
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
 
     onSubmit: (values) => API.newChannel({ name: values.body })
       .then(({ id }) => {
@@ -45,9 +47,7 @@ const Add = (props) => {
 
   useEffect(() => {
     refEl.current.focus();
-    const timer = setTimeout(() => formik.setSubmitting(false), 2000);
-    return () => clearTimeout(timer);
-  }, [formik]);
+  }, []);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -78,7 +78,7 @@ const Add = (props) => {
             <Button
               variant="primary"
               type="submit"
-              disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
+              disabled={formik.isSubmitting}
             >
               {t('buttons.send')}
             </Button>
