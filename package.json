@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "0.0.1",
-  "description": "",
+  "description": "This project is analogue of most of Chats from the internet",
   "main": "src/init.jsx",
   "type": "module",
   "engines": {
@@ -11,7 +11,8 @@
     "test": "jest",
     "prebuild": "rm -rf dist",
     "build": "NODE_ENV=production npx webpack --mode production",
-    "start": "node bin/slack.js"
+    "start": "node bin/slack.js",
+    "test-coverage": "npm test -- --coverage --coverageProvider=v8"
   },
   "repository": {
     "type": "git",
