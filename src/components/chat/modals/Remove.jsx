@@ -36,7 +36,12 @@ const Remove = (props) => {
             <Button disabled={isSubmitting} className="btn btn-secondary mx-2" onClick={hideModal}>
               {t('buttons.cancel')}
             </Button>
-            <Button disabled={isSubmitting} variant="danger" type="submit">
+            <Button
+              data-testid="remove-button"
+              disabled={isSubmitting}
+              variant="danger"
+              type="submit"
+            >
               {t('buttons.remove')}
             </Button>
           </div>

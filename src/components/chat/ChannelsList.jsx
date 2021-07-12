@@ -40,7 +40,12 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
           {channel.name}
         </Button>
 
-        <Dropdown.Toggle split variant={buttonType} id="dropdown-split-basic" />
+        <Dropdown.Toggle
+          split
+          variant={buttonType}
+          id="dropdown-split-basic"
+          data-testid="dropdown"
+        />
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => showModal('removing', channel)}>

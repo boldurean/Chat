@@ -192,5 +192,29 @@ describe('chat', () => {
     expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
   });
 
-// TODO: tests for renaming and removing channel
+  test('renaming channel', async () => {
+    userEvent.click(await screen.findByRole('button', { name: '+' }));
+    userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByTestId('dropdown'));
+    expect(await screen.findByText(/Переименовать/i)).toBeInTheDocument();
+    userEvent.click(await screen.findByRole('button', { name: /Переименовать/i }));
+    userEvent.type(await screen.findByTestId('rename-channel'), 'renamed channel');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    expect(await screen.findByRole('button', { name: /renamed channel/i })).toBeInTheDocument();
+  });
+
+  test('removing channel', async () => {
+    userEvent.click(await screen.findByRole('button', { name: '+' }));
+    userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
+    userEvent.click(await screen.findByTestId('dropdown'));
+    expect(await screen.findByText(/Удалить/i)).toBeInTheDocument();
+    userEvent.click(await screen.findByRole('button', { name: /Удалить/i }));
+    userEvent.click(await screen.findByTestId('remove-button'));
+    await waitFor(() => {
+      expect(screen.queryByText(/test channel/i)).not.toBeInTheDocument();
+    });
+  });
 });
