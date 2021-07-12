@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchingDataSuccess } from './fetchData.js';
+import { fetchingDataSuccess } from '../init/fetchData.js';
 
 export const slice = createSlice({
   name: 'channels',

@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
-import useAuth from '../../hooks/useAuth.js';
-import routes from '../../routes.js';
-import rollbar from '../../Rollbar.js';
-import logo from '../../img/login.jpg';
+import useAuth from '../services/auth/useAuth.js';
+import routes from '../routes.js';
+import rollbar from '../services/logger/Rollbar.js';
+import logo from '../img/login.jpg';
 
 const LoginPage = () => {
   const auth = useAuth();

@@ -1,39 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Navbar } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import {
   BrowserRouter as Router, Switch, Route, Redirect, Link,
 } from 'react-router-dom';
-import Chat from './chat/Chat.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import Error404 from './pages/Error404.jsx';
-import SignupPage from './pages/SignupPage.jsx';
-import authContext from '../contexts/authContext.js';
-import useAuth from '../hooks/useAuth.js';
-
-const hasToken = JSON.parse(localStorage.getItem('userId')) !== null;
-
-const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(hasToken);
-
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('userId');
-    setLoggedIn(false);
-  };
-
-  return (
-    <authContext.Provider
-      value={{
-        loggedIn,
-        logIn,
-        logOut,
-      }}
-    >
-      {children}
-    </authContext.Provider>
-  );
-};
+import {
+  ChatPage, LoginPage, SignupPage, ErrorPage,
+} from './pages';
+import { AuthProvider, useAuth } from './services/auth';
 
 const PrivateRoute = ({ children, exact, path }) => {
   const auth = useAuth();
@@ -57,7 +31,7 @@ const AuthButton = () => {
   return auth.loggedIn ? <Button onClick={auth.logOut}>{t('buttons.logout')}</Button> : null;
 };
 
-const Component = () => (
+const App = () => (
   <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
@@ -76,10 +50,10 @@ const Component = () => (
             <LoginPage />
           </Route>
           <PrivateRoute path="/" exact>
-            <Chat />
+            <ChatPage />
           </PrivateRoute>
           <Route path="/404">
-            <Error404 />
+            <ErrorPage />
           </Route>
           <Redirect to="/404" />
         </Switch>
@@ -88,4 +62,4 @@ const Component = () => (
   </AuthProvider>
 );
 
-export default Component;
+export default App;

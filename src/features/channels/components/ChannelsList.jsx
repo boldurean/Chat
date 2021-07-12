@@ -4,8 +4,8 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../slices';
-import fetchChatData from '../../slices/fetchData.js';
+import { actions } from '../Slice.js';
+import { fetchData } from '../../init';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
   const { t } = useTranslation();
@@ -66,7 +66,7 @@ const ChannelsList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchChatData());
+    dispatch(fetchData());
   }, [dispatch]);
 
   return (

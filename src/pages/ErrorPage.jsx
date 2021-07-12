@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import bug from '../../img/bug.png';
+import bug from '../img/bug.png';
 
-const Error404 = () => {
+const ErrorPage = () => {
   const history = useHistory();
   return (
     <div className="container text-center my-5">
@@ -24,4 +24,4 @@ const Error404 = () => {
   );
 };
 
-export default Error404;
+export default ErrorPage;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAPI from '../../../hooks/useAPI.js';
-import rollbar from '../../../Rollbar.js';
+import useAPI from '../../../../services/api/useAPI.js';
+import { logger } from '../../../../services/logger';
 
 const Remove = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,7 +19,7 @@ const Remove = (props) => {
       .catch((err) => {
         setIsSubmitting(false);
         console.error(err);
-        rollbar.error(err);
+        logger.error(err);
         return err;
       });
   };

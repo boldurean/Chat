@@ -1,5 +1,5 @@
 import React from 'react';
-import apiContext from '../contexts/apiContext.js';
+import apiContext from '../../contexts/apiContext.js';
 
 const ApiProvider = ({ children, socket }) => {
   const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {

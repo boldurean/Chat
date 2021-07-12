@@ -1,23 +1,25 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
-import useAPI from '../../../hooks/useAPI.js';
-import rollbar from '../../../Rollbar.js';
+import useAPI from '../../../../services/api/useAPI.js';
+import { logger } from '../../../../services/logger';
+import { channelsActions } from '../../index.js';
 
-const Rename = (props) => {
-  const { modal, hideModal } = props;
+const Add = (props) => {
+  const { hideModal } = props;
+  const API = useAPI();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { channelsList } = useSelector((state) => state.channels);
   const existingChannelNames = channelsList.map((c) => c.name);
-  const { channel } = modal;
-  const API = useAPI();
+  const { switchChannel } = channelsActions;
 
   const formik = useFormik({
     initialValues: {
-      body: channel.name,
+      body: '',
     },
     validationSchema: yup.object().shape({
       body: yup
@@ -30,11 +32,13 @@ const Rename = (props) => {
     validateOnChange: false,
     validateOnBlur: false,
 
-    onSubmit: async (values) => API.renameChannel({ id: channel.id, name: values.body })
-      .then(hideModal)
-      .catch((err) => {
+    onSubmit: (values) => API.newChannel({ name: values.body })
+      .then(({ id }) => {
+        dispatch(switchChannel(id));
+        hideModal();
+      }).catch((err) => {
         console.error(err);
-        rollbar.error(err);
+        logger.error(err);
         return err;
       }),
   });
@@ -42,28 +46,28 @@ const Rename = (props) => {
   const refEl = useRef();
 
   useEffect(() => {
-    refEl.current.select();
+    refEl.current.focus();
   }, []);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">{t('channels.rename')}</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('channels.addNew')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               name="body"
-              data-testid="rename-channel"
+              data-testid="add-channel"
               ref={refEl}
               value={formik.values.body}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               isInvalid={!!formik.errors.body}
-              type="text"
-              placeholder="Enter new name"
               disabled={formik.isSubmitting}
+              type="text"
+              placeholder={t('channels.channelName')}
             />
             <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
           </Form.Group>
@@ -85,4 +89,4 @@ const Rename = (props) => {
   );
 };
 
-export default Rename;
+export default Add;

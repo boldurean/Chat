@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import AddChannelButton from './AddChannelButton.jsx';
-import Channels from './ChannelsList.jsx';
-import MessagesBox from './MessagesBox.jsx';
-import MessagesCounter from './MessagesCounter.jsx';
-import MessagesField from './MessagesField.jsx';
-import getModal from './modals/index.js';
+import { CreateChannel, ChannelsList } from '../features/channels';
+import { MessagesBox, MessagesCounter, MessageField } from '../features/chat';
+import getModal from '../features/channels/components/modals';
 
 const renderModal = ({ modal, hideModal }) => {
   if (!modal.type) return null;
@@ -15,7 +12,7 @@ const renderModal = ({ modal, hideModal }) => {
   return <Modal modal={modal} hideModal={hideModal} />;
 };
 
-const Chat = () => {
+export default () => {
   const [modal, setModal] = useState({ type: null, channel: null });
   const { t } = useTranslation();
   const hideModal = () => setModal({ type: null, channel: null });
@@ -27,15 +24,15 @@ const Chat = () => {
         <Col bsPrefix="col-4 col-md-3 col-lg-2 border-end pt-5 px-0 bg-light overflow-auto h-100">
           <div className="d-flex justify-content-between mb-2 ps-2 pe-2">
             <span>{t('channels.channels')}</span>
-            <AddChannelButton showModal={showModal} />
+            <CreateChannel showModal={showModal} />
           </div>
-          <Channels showModal={showModal} />
+          <ChannelsList showModal={showModal} />
         </Col>
         <Col bsPrefix="col p-0 h-100">
           <div className="d-flex flex-column h-100">
             <MessagesCounter />
             <MessagesBox />
-            <MessagesField />
+            <MessageField />
           </div>
         </Col>
         {renderModal({ modal, hideModal })}
@@ -43,5 +40,3 @@ const Chat = () => {
     </Container>
   );
 };
-
-export default Chat;

@@ -1,45 +1,46 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
-import ApiProvider from './api/ApiProvider.jsx';
-import E from './api/events.js';
-import Component from './components/index.jsx';
-import i18n from './locales';
-import { actions } from './slices/index.js';
+import { Provider as StoreProvider } from 'react-redux';
+import { ApiProvider, events } from './services/api';
+import App from './App.jsx';
+import i18n from './services/locales';
+import { channelsActions } from './features/channels';
+import { messagesActions } from './features/chat';
 import createStore from './store.js';
 
 const Init = (socket) => {
   const store = createStore();
 
   const {
-    newMessage, newChannel, removeChannel, renameChannel,
-  } = actions;
+    newChannel, removeChannel, renameChannel,
+  } = channelsActions;
+  const { newMessage } = messagesActions;
 
-  socket.on(E.NEW_MESSAGE, (data) => {
+  socket.on(events.NEW_MESSAGE, (data) => {
     store.dispatch(newMessage(data));
   });
 
-  socket.on(E.NEW_CHANNEL, (data) => {
+  socket.on(events.NEW_CHANNEL, (data) => {
     store.dispatch(newChannel(data));
   });
 
-  socket.on(E.REMOVE_CHANNEL, (data) => {
+  socket.on(events.REMOVE_CHANNEL, (data) => {
     store.dispatch(removeChannel(data));
   });
 
-  socket.on(E.RENAME_CHANNEL, (data) => {
+  socket.on(events.RENAME_CHANNEL, (data) => {
     store.dispatch(renameChannel(data));
   });
 
   return (
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <ApiProvider socket={socket}>
         <I18nextProvider i18n={i18n}>
-          <Component />
+          <App />
         </I18nextProvider>
       </ApiProvider>
-    </Provider>
+    </StoreProvider>
   );
 };
 

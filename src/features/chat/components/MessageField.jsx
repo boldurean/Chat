@@ -1,13 +1,14 @@
-import { useFormik } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import {
   Button, ButtonGroup, Form, FormControl, InputGroup,
 } from 'react-bootstrap';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import useAPI from '../../hooks/useAPI.js';
+import useAPI from '../../../services/api/useAPI.js';
+import { logger } from '../../../services/logger';
 
-const MessagesField = () => {
+const MessageField = () => {
   const API = useAPI();
   const { username } = JSON.parse(localStorage.getItem('userId'));
   const { currentChannelId } = useSelector((state) => state.channels);
@@ -24,6 +25,7 @@ const MessagesField = () => {
         .catch((err) => {
           formik.setSubmitting(false);
           console.error(err);
+          logger.error(err);
           return err;
         });
     },
@@ -31,7 +33,7 @@ const MessagesField = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [currentChannelId, formik]);
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -39,6 +41,7 @@ const MessagesField = () => {
         <InputGroup className="mb-3">
           <FormControl
             required
+            autoComplete="off"
             data-testid="new-message"
             ref={inputRef}
             name="body"
@@ -76,4 +79,4 @@ const MessagesField = () => {
   );
 };
 
-export default MessagesField;
+export default MessageField;

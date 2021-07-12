@@ -3,7 +3,7 @@ import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import { render } from 'react-dom';
-import socket from './api/socket.js';
+import socket from './services/api/socket.js';
 import init from './init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {

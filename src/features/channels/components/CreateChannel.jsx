@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddChannelButton = ({ showModal }) => (
+const CreateChannel = ({ showModal }) => (
   <button
     onClick={() => showModal('adding')}
     type="button"
@@ -20,4 +20,4 @@ const AddChannelButton = ({ showModal }) => (
   </button>
 );
 
-export default AddChannelButton;
+export default CreateChannel;
