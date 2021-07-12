@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 import {
   ChatPage, LoginPage, SignupPage, ErrorPage,
-} from './pages';
-import { AuthProvider, useAuth } from './services/auth';
+} from '../pages';
+import { AuthProvider, useAuth } from '../services/auth';
 
 const PrivateRoute = ({ children, exact, path }) => {
   const auth = useAuth();

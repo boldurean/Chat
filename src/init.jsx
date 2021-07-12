@@ -3,7 +3,7 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
 import { ApiProvider, events } from './services/api';
-import App from './App.jsx';
+import App from './features/App.jsx';
 import i18n from './services/locales';
 import { channelsActions } from './features/channels';
 import { messagesActions } from './features/chat';
