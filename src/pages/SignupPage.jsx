@@ -10,7 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../services/auth/useAuth.js';
 import rollbar from '../services/logger/Rollbar.js';
-import routes from '../services/api/routes.js';
+import { routes } from '../services/api';
 import logo from '../img/register.jpg';
 
 const SignupPage = () => {

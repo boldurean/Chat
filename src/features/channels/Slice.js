@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchingDataSuccess } from '../init/fetchData.js';
+import { fetchData } from '../init/index.js';
 
 export const slice = createSlice({
   name: 'channels',
@@ -8,34 +9,29 @@ export const slice = createSlice({
     currentChannelId: 1,
   },
   reducers: {
-    newChannel: (state, action) => {
-      const channelsList = [...state.channelsList, action.payload];
-      return { ...state, channelsList };
+    newChannel: (state, { payload }) => {
+      state.channelsList.push(payload);
+      state.currentChannelId = payload.id;
     },
     renameChannel: (state, action) => {
       const channel = state.channelsList.find((c) => c.id === action.payload.id);
       channel.name = action.payload.name;
-      return state;
     },
     removeChannel: (state, { payload }) => {
-      const channelsList = state.channelsList.filter((channel) => channel.id !== payload.id);
-      if (state.currentChannelId === payload.id) {
-        return {
-          channelsList,
-          currentChannelId: 1,
-        };
-      }
-      return { ...state, channelsList };
+      state.channelsList = state.channelsList.filter((channel) => channel.id !== payload.id);
+      state.currentChannelId = state.currentChannelId === payload.id ? 1 : state.currentChannelId;
     },
-    switchChannel: (state, action) => ({ ...state, currentChannelId: action.payload }),
+    switchChannel: (state, { payload }) => {
+      state.currentChannelId = payload;
+    },
   },
   extraReducers: {
-    [fetchingDataSuccess]: (state, { payload }) => ({
-      ...state,
-      channelsList: payload.channels,
-    }),
+    [fetchData.fulfilled]: (state, { payload }) => {
+      state.channelsList = payload.channels;
+      state.currentChannelId = 1;
+    },
   },
 });
 
-export const actions = { ...slice.actions };
+export const { actions } = slice;
 export default slice.reducer;

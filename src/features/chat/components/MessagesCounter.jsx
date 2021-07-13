@@ -1,15 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { channelsSelector } from '../../channels';
+import messagesSelector from '../selector.js';
 
 const MessagesCounter = () => {
   const { t } = useTranslation();
-
-  const {
-    channels: { channelsList, currentChannelId },
-    messages,
-  } = useSelector((state) => state);
-  const count = messages.filter((m) => m.channelId === currentChannelId).length;
+  const { channelsList, currentChannelId } = channelsSelector();
+  const { count } = messagesSelector();
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">

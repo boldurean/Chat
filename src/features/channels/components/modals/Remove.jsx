@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAPI from '../../../../services/api/useAPI.js';
+import { useAPI } from '../../../../services/api';
 import { logger } from '../../../../services/logger';
+import useModal from './useModal.js';
 
-const Remove = (props) => {
+const Remove = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { hideModal, modal } = props;
+  const { hideModal, modal } = useModal();
   const { t } = useTranslation();
   const API = useAPI();
 
@@ -52,4 +53,3 @@ const Remove = (props) => {
 };
 
 export default Remove;
-// END

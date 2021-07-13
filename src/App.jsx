@@ -8,7 +8,7 @@ import {
   ChatPage, LoginPage, SignupPage, ErrorPage,
 } from './pages';
 import { PrivateRoute } from './components';
-import routes from './services/api/routes.js';
+import { routes } from './services/api';
 import useAuth from './services/auth/useAuth.js';
 
 const App = () => {
@@ -26,19 +26,19 @@ const App = () => {
         </Navbar>
 
         <Switch>
-          <Route path={routes.signupPage()}>
+          <Route path={routes.signupPage}>
             <SignupPage />
           </Route>
-          <Route path={routes.loginPage()}>
+          <Route path={routes.loginPage}>
             <LoginPage />
           </Route>
-          <PrivateRoute path={routes.chatPage()} exact>
+          <PrivateRoute path={routes.chatPage} exact>
             <ChatPage />
           </PrivateRoute>
-          <Route path={routes.errorPage()}>
+          <Route path={routes.errorPage}>
             <ErrorPage />
           </Route>
-          <Redirect to={routes.errorPage()} />
+          <Redirect to={routes.errorPage} />
         </Switch>
       </div>
     </Router>

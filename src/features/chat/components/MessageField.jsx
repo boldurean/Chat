@@ -4,16 +4,16 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import useAPI from '../../../services/api/useAPI.js';
+import { useAPI } from '../../../services/api';
 import { logger } from '../../../services/logger';
+import { channelsSelector } from '../../channels';
 
 const MessageField = () => {
   const API = useAPI();
   const { username } = JSON.parse(localStorage.getItem('userId'));
-  const { currentChannelId } = useSelector((state) => state.channels);
+  const { currentChannelId } = channelsSelector();
   const { t } = useTranslation();
-  const inputRef = useRef();
+  const inputElementRef = useRef();
 
   const formik = useFormik({
     initialValues: {
@@ -21,7 +21,10 @@ const MessageField = () => {
     },
     onSubmit: (values) => {
       API.newMessage({ text: values.body, channelId: currentChannelId, username })
-        .then(formik.resetForm)
+        .then(() => {
+          formik.resetForm();
+          inputElementRef.current.focus();
+        })
         .catch((err) => {
           formik.setSubmitting(false);
           console.error(err);
@@ -32,8 +35,8 @@ const MessageField = () => {
   });
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, [currentChannelId, formik]);
+    inputElementRef.current.focus();
+  }, [currentChannelId]);
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -43,7 +46,7 @@ const MessageField = () => {
             required
             autoComplete="off"
             data-testid="new-message"
-            ref={inputRef}
+            ref={inputElementRef}
             name="body"
             disabled={formik.isSubmitting}
             value={formik.values.body}

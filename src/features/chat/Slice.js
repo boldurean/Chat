@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchingDataSuccess } from '../init/fetchData.js';
+import { fetchData } from '../init/index.js';
 import { actions as channelsSliceActions } from '../channels/Slice.js';
 
 const { removeChannel } = channelsSliceActions;
@@ -8,26 +8,15 @@ const slice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
-    newMessage: (state, action) => {
-      state.push(action.payload);
-    },
-    clearMessages: () => {
-      const newState = {
-        text: 'Messages deleted',
-        id: Math.random(),
-        channelId: 1,
-        username: 'admin',
-      };
-      return [newState];
-    },
+    newMessage: (state, action) => [...state, action.payload],
   },
   extraReducers: {
-    [fetchingDataSuccess]: (state, { payload }) => [...payload.messages],
+    [fetchData.fulfilled]: (state, { payload }) => payload.messages,
     [removeChannel]: (state, action) => state
       .filter((message) => message.channelId !== action.payload.id),
   },
 });
 
-export const actions = { ...slice.actions };
+export const { actions } = slice;
 
 export default slice.reducer;

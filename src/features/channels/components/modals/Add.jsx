@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import useAPI from '../../../../services/api/useAPI.js';
+import { useAPI } from '../../../../services/api';
 import { logger } from '../../../../services/logger';
-import { channelsActions } from '../../index.js';
+import { channelsActions, channelsSelector } from '../../index.js';
+import useModal from './useModal.js';
 
-const Add = (props) => {
-  const { hideModal } = props;
+const Add = () => {
+  const { hideModal } = useModal();
   const API = useAPI();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { channelsList } = useSelector((state) => state.channels);
-  const existingChannelNames = channelsList.map((c) => c.name);
+  const { existingChannelNames } = channelsSelector();
   const { switchChannel } = channelsActions;
 
   const formik = useFormik({
@@ -27,6 +27,7 @@ const Add = (props) => {
         .min(3, t('errors.fromTo', { min: 3, max: 20 }))
         .max(20, t('errors.fromTo', { min: 3, max: 20 }))
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
+        .trim()
         .required(t('errors.required')),
     }),
     validateOnChange: false,
@@ -43,11 +44,15 @@ const Add = (props) => {
       }),
   });
 
-  const refEl = useRef();
+  const inputElementRef = useRef();
 
   useEffect(() => {
-    refEl.current.focus();
+    inputElementRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    inputElementRef.current.select();
+  }, [formik.isSubmitting]);
 
   return (
     <Modal show onHide={hideModal} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -60,7 +65,7 @@ const Add = (props) => {
             <Form.Control
               name="body"
               data-testid="add-channel"
-              ref={refEl}
+              ref={inputElementRef}
               value={formik.values.body}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
