@@ -7,59 +7,42 @@ import {
 import {
   ChatPage, LoginPage, SignupPage, ErrorPage,
 } from './pages';
-import { AuthProvider, useAuth } from './services/auth';
+import { PrivateRoute } from './components';
+import routes from './services/api/routes.js';
+import useAuth from './services/auth/useAuth.js';
 
-const PrivateRoute = ({ children, exact, path }) => {
+const App = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
 
   return (
-    <Route
-      path={path}
-      exact={exact}
-      render={({ location }) => (auth.loggedIn ? (
-        children
-      ) : (
-        <Redirect to={{ pathname: '/login', state: { from: location } }} />
-      ))}
-    />
-  );
-};
-
-const AuthButton = () => {
-  const { t } = useTranslation();
-  const auth = useAuth();
-  return auth.loggedIn ? <Button onClick={auth.logOut}>{t('buttons.logout')}</Button> : null;
-};
-
-const App = () => (
-  <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
         <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
           <Navbar.Brand as={Link} to="/">
             Hexlet Chat
           </Navbar.Brand>
-          <AuthButton />
+          {auth.loggedIn && <Button onClick={auth.logOut}>{t('buttons.logout')}</Button>}
         </Navbar>
 
         <Switch>
-          <Route path="/signup">
+          <Route path={routes.signupPage()}>
             <SignupPage />
           </Route>
-          <Route path="/login">
+          <Route path={routes.loginPage()}>
             <LoginPage />
           </Route>
-          <PrivateRoute path="/" exact>
+          <PrivateRoute path={routes.chatPage()} exact>
             <ChatPage />
           </PrivateRoute>
-          <Route path="/404">
+          <Route path={routes.errorPage()}>
             <ErrorPage />
           </Route>
-          <Redirect to="/404" />
+          <Redirect to={routes.errorPage()} />
         </Switch>
       </div>
     </Router>
-  </AuthProvider>
-);
+  );
+};
 
 export default App;

@@ -4,6 +4,7 @@ import React from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
 import { ApiProvider, events } from './services/api';
+import { AuthProvider } from './services/auth';
 import resources from './services/locales';
 import App from './App.jsx';
 import { channelsActions } from './features/channels';
@@ -44,7 +45,9 @@ const init = (socket) => {
     <StoreProvider store={store}>
       <ApiProvider socket={socket}>
         <I18nextProvider i18n={i18instance}>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </I18nextProvider>
       </ApiProvider>
     </StoreProvider>
