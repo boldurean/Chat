@@ -9,7 +9,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import useAuth from '../services/auth/useAuth.js';
-import routes from '../routes.js';
+import routes from '../services/api/routes.js';
 import rollbar from '../services/logger/Rollbar.js';
 import logo from '../img/login.jpg';
 

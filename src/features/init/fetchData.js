@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { logger } from '../../services/logger/index.js';
-import routes from '../../routes.js';
+import routes from '../../services/api/routes.js';
 
 export const fetchingDataRequest = createAction('FETCH_DATA_REQUEST');
 export const fetchingDataSuccess = createAction('FETCH_DATA_SUCCESS');

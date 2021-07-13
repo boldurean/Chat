@@ -6,15 +6,7 @@ import { render } from 'react-dom';
 import socket from './services/api/socket.js';
 import init from './init.jsx';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
-
-const vdom = init(socket);
-
 render(
-  vdom,
+  init(socket),
   document.getElementById('chat'),
 );
-
-console.log('it works!');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import authContext from '../../contexts/authContext.js';
+import authContext from './authContext.js';
 
 const hasToken = JSON.parse(localStorage.getItem('userId')) !== null;
 

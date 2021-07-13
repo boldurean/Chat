@@ -1,15 +1,22 @@
 /* eslint-disable react/destructuring-assignment */
+import i18next from 'i18next';
 import React from 'react';
-import { I18nextProvider } from 'react-i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
 import { ApiProvider, events } from './services/api';
-import App from './features/App.jsx';
-import i18n from './services/locales';
+import resources from './services/locales';
+import App from './App.jsx';
 import { channelsActions } from './features/channels';
 import { messagesActions } from './features/chat';
 import createStore from './store.js';
 
-const Init = (socket) => {
+const init = (socket) => {
+  const i18instance = i18next.createInstance();
+  i18instance.use(initReactI18next).init({
+    resources,
+    lng: 'ru',
+  });
+
   const store = createStore();
 
   const {
@@ -36,7 +43,7 @@ const Init = (socket) => {
   return (
     <StoreProvider store={store}>
       <ApiProvider socket={socket}>
-        <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18instance}>
           <App />
         </I18nextProvider>
       </ApiProvider>
@@ -44,4 +51,4 @@ const Init = (socket) => {
   );
 };
 
-export default Init;
+export default init;
