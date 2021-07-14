@@ -6,7 +6,7 @@ export const slice = createSlice({
   name: 'channels',
   initialState: {
     channelsList: [],
-    currentChannelId: 1,
+    currentChannelId: null,
   },
   reducers: {
     newChannel: (state, { payload }) => {
@@ -27,8 +27,9 @@ export const slice = createSlice({
   },
   extraReducers: {
     [fetchData.fulfilled]: (state, { payload }) => {
+      const channelId = payload.channels[0].id;
       state.channelsList = payload.channels;
-      state.currentChannelId = 1;
+      state.currentChannelId = channelId;
     },
   },
 });

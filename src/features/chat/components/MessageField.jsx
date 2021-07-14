@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useAPI } from '../../../services/api';
 import { logger } from '../../../services/logger';
-import { channelsSelectors } from '../../channels/Slice.js';
+import { channelsSelectors } from '../../channels';
 
 const MessageField = () => {
   const API = useAPI();

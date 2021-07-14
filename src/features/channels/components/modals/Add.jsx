@@ -35,8 +35,8 @@ const Add = () => {
 
     onSubmit: (values) => API.newChannel({ name: values.body })
       .then(({ id }) => {
-        dispatch(switchChannel(id));
         hideModal();
+        dispatch(switchChannel(id));
       }).catch((err) => {
         console.error(err);
         logger.error(err);
