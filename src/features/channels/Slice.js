@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchData } from '../init/index.js';
 
 export const slice = createSlice({
@@ -32,6 +32,30 @@ export const slice = createSlice({
     },
   },
 });
+
+const getChannels = (state) => state.channels.channelsList;
+const getCurrentChannelId = (state) => state.channels.currentChannelId;
+
+const getChannelNames = createSelector(
+  getChannels,
+  (channelsList) => channelsList.map((c) => c.name),
+);
+
+const getCurrentChannelName = createSelector(
+  getChannels,
+  getCurrentChannelId,
+  (channelsList, currentChannelId) => {
+    const channel = channelsList.find((c) => c.id === currentChannelId);
+    return channel?.name;
+  },
+);
+
+export const channelsSelectors = {
+  getChannels,
+  getCurrentChannelId,
+  getCurrentChannelName,
+  getChannelNames,
+};
 
 export const { actions } = slice;
 export default slice.reducer;

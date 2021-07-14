@@ -2,16 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useAPI from '../../../../services/api/useAPI.js';
 import { logger } from '../../../../services/logger';
-import { channelsSelector } from '../../index.js';
+import { channelsSelectors } from '../../index.js';
 import useModal from './useModal.js';
 
 const Rename = () => {
   const { modal: { channel }, hideModal } = useModal();
   const { t } = useTranslation();
-  const { existingChannelNames } = channelsSelector();
+  const channelNames = useSelector(channelsSelectors.getChannelNames);
   const API = useAPI();
 
   const formik = useFormik({
@@ -23,7 +24,7 @@ const Rename = () => {
         .string()
         .min(3, t('errors.fromTo', { min: 3, max: 20 }))
         .max(20, t('errors.fromTo', { min: 3, max: 20 }))
-        .notOneOf(existingChannelNames, t('errors.notOneOf'))
+        .notOneOf(channelNames, t('errors.notOneOf'))
         .trim()
         .required(t('errors.required')),
     }),

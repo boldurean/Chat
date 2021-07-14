@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchData } from '../init/index.js';
 import { actions as channelsSliceActions } from '../channels/Slice.js';
 
@@ -16,6 +16,25 @@ const slice = createSlice({
       .filter((message) => message.channelId !== action.payload.id),
   },
 });
+
+const getMessages = (state) => state.messages;
+const getCurrentChannelId = (state) => state.channels.currentChannelId;
+
+const getCurrentChannelMessages = createSelector(
+  getMessages,
+  getCurrentChannelId,
+  (messages, currentChannelId) => {
+    if (messages.length > 0) {
+      return messages.filter((msg) => msg.channelId === currentChannelId);
+    }
+    return [];
+  },
+);
+
+export const messageSelectors = {
+  getMessages,
+  getCurrentChannelMessages,
+};
 
 export const { actions } = slice;
 

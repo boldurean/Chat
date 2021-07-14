@@ -4,14 +4,15 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useAPI } from '../../../services/api';
 import { logger } from '../../../services/logger';
-import { channelsSelector } from '../../channels';
+import { channelsSelectors } from '../../channels/Slice.js';
 
 const MessageField = () => {
   const API = useAPI();
   const { username } = JSON.parse(localStorage.getItem('userId'));
-  const { currentChannelId } = channelsSelector();
+  const currentChannelId = useSelector(channelsSelectors.getCurrentChannelId);
   const { t } = useTranslation();
   const inputElementRef = useRef();
 

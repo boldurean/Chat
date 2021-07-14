@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useAPI } from '../../../../services/api';
 import { logger } from '../../../../services/logger';
-import { channelsActions, channelsSelector } from '../../index.js';
+import { channelsActions, channelsSelectors } from '../../index.js';
 import useModal from './useModal.js';
 
 const Add = () => {
@@ -14,7 +14,7 @@ const Add = () => {
   const API = useAPI();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { existingChannelNames } = channelsSelector();
+  const existingChannelNames = useSelector(channelsSelectors.getChannelNames);
   const { switchChannel } = channelsActions;
 
   const formik = useFormik({

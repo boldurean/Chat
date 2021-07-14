@@ -1,9 +1,9 @@
 import React from 'react';
-import messagesSelector from '../selector.js';
+import { useSelector } from 'react-redux';
+import { messageSelectors } from '../Slice.js';
 
 const MessagesBox = () => {
-  const { currentChannelMessages } = messagesSelector();
-
+  const currentChannelMessages = useSelector(messageSelectors.getCurrentChannelMessages);
   return (
     <div id="message-box" className="chat-messages overflow-auto px-5 ">
       {currentChannelMessages.length > 0
