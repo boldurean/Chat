@@ -16,6 +16,7 @@ const Chat = () => {
 
   useEffect(() => {
     dispatch(fetchData()).then(() => setIsDataReceived(true));
+    return () => setIsDataReceived(true);
   }, [dispatch]);
 
   return isDataReceived
