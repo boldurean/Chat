@@ -28,6 +28,7 @@ export default {
       userExists: 'Пользователь с таким именем существует',
       notOneOf: 'Канал с таким названием уже существует',
       auth: 'Неверные имя пользователя или пароль',
+      pageNotFound: 'We are sorry, the page you requested could not be found. Please go back to the homepage or contact us at v.boldurean@gmail.com',
     },
     texts: {
       login: 'Войти',

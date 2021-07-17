@@ -1,8 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import bug from '../img/bug.png';
 
 const ErrorPage = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   return (
     <div className="container text-center my-5">
@@ -12,7 +14,7 @@ const ErrorPage = () => {
       </h1>
       <h2 className="text-primary">Page not found</h2>
       {/* eslint-disable-next-line max-len */}
-      <p>We are sorry, the page you requested could not be found. Please go back to the homepage or contact us at v.boldurean@gmail.com</p>
+      <p>{t('errors.pageNotFound')}</p>
       <button
         type="button"
         className="btn btn-primary btn-md text-white mt-4"

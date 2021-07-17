@@ -1,7 +1,7 @@
 import Rollbar from 'rollbar';
 
-const rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
+const logger = new Rollbar({
+  accessToken: process.env.TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
@@ -10,4 +10,4 @@ const rollbar = new Rollbar({
   enabled: process.env.NODE_ENV === 'production',
 });
 
-export default rollbar;
+export default logger;

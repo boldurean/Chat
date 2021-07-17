@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import useAuth from '../services/auth/useAuth.js';
 import { routes } from '../services/api';
-import rollbar from '../services/logger/Rollbar.js';
+import logger from '../services/logger/logger.js';
 import logo from '../img/login.jpg';
 
 const LoginPage = () => {
@@ -46,10 +46,10 @@ const LoginPage = () => {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
-          rollbar.error(err);
+          logger.error(err);
           return;
         }
-        rollbar.error(err);
+        logger.error(err);
         console.error(err);
         throw err;
       }

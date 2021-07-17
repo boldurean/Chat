@@ -11,9 +11,9 @@ import { channelsActions } from './features/channels';
 import { messagesActions } from './features/chat';
 import createStore from './store.js';
 
-const init = (socket) => {
-  const i18instance = i18next.createInstance();
-  i18instance.use(initReactI18next).init({
+const init = async (socket) => {
+  const i18n = i18next.createInstance();
+  await i18n.use(initReactI18next).init({
     resources,
     lng: 'ru',
   });
@@ -44,7 +44,7 @@ const init = (socket) => {
   return (
     <StoreProvider store={store}>
       <ApiProvider socket={socket}>
-        <I18nextProvider i18n={i18instance}>
+        <I18nextProvider i18n={i18n}>
           <AuthProvider>
             <App />
           </AuthProvider>

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../services/auth/useAuth.js';
-import rollbar from '../services/logger/Rollbar.js';
+import logger from '../services/logger/logger.js';
 import { routes } from '../services/api';
 import logo from '../img/register.jpg';
 
@@ -60,11 +60,11 @@ const SignupPage = () => {
         if (err.isAxiosError && err.response.status === 409) {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
-          rollbar.error(err);
+          logger.error(err);
           console.error(err);
           return;
         }
-        rollbar.error(err);
+        logger.error(err);
         console.error(err);
         throw err;
       }

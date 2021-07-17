@@ -5,4 +5,4 @@ export {
 } from './Slice.js';
 export { default as CreateChannel } from './components/CreateChannelButton.jsx';
 export { default as ChannelsList } from './components/ChannelsList.jsx';
-export { default as Modal } from './components/modals/ModalDialog.jsx';
+export { default as Modal } from './components/modals/ChannelsModal.jsx';

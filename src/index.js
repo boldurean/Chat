@@ -6,7 +6,10 @@ import { render } from 'react-dom';
 import socket from './services/api/socket.js';
 import init from './init.jsx';
 
-render(
-  init(socket),
-  document.getElementById('chat'),
-);
+const runApp = async () => {
+  render(
+    await init(socket),
+    document.getElementById('chat'),
+  );
+};
+runApp();

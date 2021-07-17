@@ -4,7 +4,7 @@ import Add from './Add.jsx';
 import Remove from './Remove.jsx';
 import Rename from './Rename.jsx';
 
-const ModalsProvider = ({ children }) => {
+const ChannelsModalProvider = ({ children }) => {
   const [modal, setModal] = useState({ type: null, channel: null });
   const hideModal = () => setModal({ type: null, channel: null });
   const showModal = (type, channel = null) => setModal({ type, channel });
@@ -32,4 +32,4 @@ const ModalsProvider = ({ children }) => {
   );
 };
 
-export default ModalsProvider;
+export default ChannelsModalProvider;
