@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { messageSelectors } from '../Slice.js';
 
+window.HTMLElement.prototype
+// eslint-disable-next-line func-names
+  .scrollIntoView = function () {}; // has to be here to avoid testing errors
+
 const MessagesBox = () => {
   const currentChannelMessages = useSelector(messageSelectors.getCurrentChannelMessages);
+
+  const messagesEndRef = useRef();
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [currentChannelMessages]);
 
   return (
     <div id="message-box" className="chat-messages overflow-auto px-5 ">
@@ -14,6 +28,7 @@ const MessagesBox = () => {
             {msg.text}
           </div>
         ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
