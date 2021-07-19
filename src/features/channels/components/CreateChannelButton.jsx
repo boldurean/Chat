@@ -1,5 +1,5 @@
 import React from 'react';
-import useModal from './modals/useModal.js';
+import { useModal } from './modals/ChannelsModalProvider.jsx';
 
 const CreateChannelButton = () => {
   const { showModal } = useModal();

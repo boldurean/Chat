@@ -12,15 +12,14 @@ const ErrorPage = () => {
         <img src={bug} alt="bug" />
         404
       </h1>
-      <h2 className="text-primary">Page not found</h2>
-      {/* eslint-disable-next-line max-len */}
+      <h2 className="text-primary">{t('texts.pageNotFound')}</h2>
       <p>{t('errors.pageNotFound')}</p>
       <button
         type="button"
         className="btn btn-primary btn-md text-white mt-4"
         onClick={() => history.push('/')}
       >
-        Take Me Home
+        {t('buttons.goHome')}
       </button>
     </div>
   );

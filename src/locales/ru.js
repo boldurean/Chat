@@ -13,6 +13,7 @@ export default {
       rename: 'Переименовать',
       remove: 'Удалить',
       send: 'Отправить',
+      goHome: 'Take me home',
     },
     forms: {
       nickname: 'Ваш ник',
@@ -34,6 +35,8 @@ export default {
       login: 'Войти',
       register: 'Регистрация',
       'do not have an account?': 'Нет аккаунта?',
+      loading: 'Loading...',
+      pageNotFound: 'Page not found',
     },
     channels: {
       channels: 'Каналы',

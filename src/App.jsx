@@ -8,8 +8,8 @@ import {
   ChatPage, LoginPage, SignupPage, ErrorPage,
 } from './pages';
 import { PrivateRoute } from './components';
-import { routes } from './services/api';
-import useAuth from './services/auth/useAuth.js';
+import routes from './routes.js';
+import { useAuth } from './services/auth';
 
 const App = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const App = () => {
           <Navbar.Brand as={Link} to="/">
             Hexlet Chat
           </Navbar.Brand>
-          {auth.loggedIn && <Button onClick={auth.logOut}>{t('buttons.logout')}</Button>}
+          {auth.isLoggedIn && <Button onClick={auth.logOut}>{t('buttons.logout')}</Button>}
         </Navbar>
 
         <Switch>

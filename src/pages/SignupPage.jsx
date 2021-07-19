@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -8,10 +7,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
-import useAuth from '../services/auth/useAuth.js';
-import logger from '../services/logger/logger.js';
-import { routes } from '../services/api';
+import { useAuth } from '../services/auth';
 import logo from '../img/register.jpg';
+import { useLogger } from '../services/logger';
 
 const SignupPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -21,6 +19,7 @@ const SignupPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
+  const logger = useLogger();
 
   const formik = useFormik({
     initialValues: {
@@ -47,9 +46,7 @@ const SignupPage = () => {
       setAuthFailed(false);
       setUserExisting(false);
       try {
-        const res = await axios.post(routes.signupPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
+        await auth.signUp(values);
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
@@ -61,11 +58,9 @@ const SignupPage = () => {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
           logger.error(err);
-          console.error(err);
           return;
         }
         logger.error(err);
-        console.error(err);
         throw err;
       }
     },

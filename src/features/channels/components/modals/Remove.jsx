@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from '../../../../services/api';
-import { logger } from '../../../../services/logger';
-import useModal from './useModal.js';
+import { useLogger } from '../../../../services/logger';
+import { useModal } from './ChannelsModalProvider.jsx';
 
 const Remove = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { hideModal, modal } = useModal();
   const { t } = useTranslation();
   const API = useAPI();
+  const logger = useLogger();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +20,6 @@ const Remove = () => {
       .then(hideModal)
       .catch((err) => {
         setIsSubmitting(false);
-        console.error(err);
         logger.error(err);
         return err;
       });

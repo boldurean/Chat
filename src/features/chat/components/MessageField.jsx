@@ -6,15 +6,19 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useAPI } from '../../../services/api';
-import { logger } from '../../../services/logger';
+import { useAuth } from '../../../services/auth';
+import { useLogger } from '../../../services/logger';
 import { channelsSelectors } from '../../channels';
 
 const MessageField = () => {
   const API = useAPI();
-  const { username } = JSON.parse(localStorage.getItem('userId'));
+  const auth = useAuth();
   const currentChannelId = useSelector(channelsSelectors.getCurrentChannelId);
   const { t } = useTranslation();
   const inputElementRef = useRef();
+  const logger = useLogger();
+
+  const { userId: { username } } = auth;
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +32,6 @@ const MessageField = () => {
         })
         .catch((err) => {
           formik.setSubmitting(false);
-          console.error(err);
           logger.error(err);
           return err;
         });

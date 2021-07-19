@@ -27,9 +27,8 @@ export const slice = createSlice({
   },
   extraReducers: {
     [fetchData.fulfilled]: (state, { payload }) => {
-      const channelId = payload.channels[0].id;
       state.channelsList = payload.channels;
-      state.currentChannelId = channelId;
+      state.currentChannelId = payload.currentChannelId;
     },
   },
 });

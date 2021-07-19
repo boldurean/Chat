@@ -7,10 +7,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
-import axios from 'axios';
-import useAuth from '../services/auth/useAuth.js';
-import { routes } from '../services/api';
-import logger from '../services/logger/logger.js';
+import { useAuth } from '../services/auth';
+import { useLogger } from '../services/logger';
 import logo from '../img/login.jpg';
 
 const LoginPage = () => {
@@ -20,6 +18,7 @@ const LoginPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
+  const logger = useLogger();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -37,9 +36,7 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
-        const res = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
+        await auth.logIn(values);
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
@@ -50,8 +47,6 @@ const LoginPage = () => {
           return;
         }
         logger.error(err);
-        console.error(err);
-        throw err;
       }
     },
   });

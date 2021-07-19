@@ -1,8 +1,9 @@
 import React from 'react';
-import useModal from './useModal.js';
+import { useModal } from './ChannelsModalProvider.jsx';
+import getModal from './index.js';
 
 const ChannelsModal = () => {
-  const { getModal, modal } = useModal();
+  const { modal } = useModal();
   if (!modal.type) return null;
 
   const Modal = getModal(modal.type);

@@ -5,7 +5,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, channelsSelectors } from '../Slice.js';
-import useModal from './modals/useModal.js';
+import { useModal } from './modals/ChannelsModalProvider.jsx';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
   const { t } = useTranslation();

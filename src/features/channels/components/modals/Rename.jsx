@@ -4,16 +4,17 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-import useAPI from '../../../../services/api/useAPI.js';
-import { logger } from '../../../../services/logger';
-import { channelsSelectors } from '../../index.js';
-import useModal from './useModal.js';
+import { useAPI } from '../../../../services/api';
+import { useLogger } from '../../../../services/logger';
+import { channelsSelectors } from '../../Slice.js';
+import { useModal } from './ChannelsModalProvider.jsx';
 
 const Rename = () => {
   const { modal: { channel }, hideModal } = useModal();
   const { t } = useTranslation();
   const channelNames = useSelector(channelsSelectors.getChannelNames);
   const API = useAPI();
+  const logger = useLogger();
 
   const formik = useFormik({
     initialValues: {
@@ -65,7 +66,12 @@ const Rename = () => {
               placeholder="Enter new name"
               disabled={formik.isSubmitting}
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
+            <Form.Control.Feedback
+              type="invalid"
+              data-testid="invalid-feedback"
+            >
+              {formik.errors.body}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button className="btn btn-secondary mx-2" onClick={hideModal}>

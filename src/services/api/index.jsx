@@ -1,7 +1,10 @@
-import React from 'react';
-import apiContext from './apiContext.js';
+import React, { createContext, useContext } from 'react';
+
+const apiContext = createContext({});
 
 const ApiProvider = ({ children, socket }) => {
+  const { Provider } = apiContext;
+
   const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {
     // eslint-disable-next-line functional/no-let
     let state = 'pending';
@@ -26,7 +29,7 @@ const ApiProvider = ({ children, socket }) => {
   });
 
   return (
-    <apiContext.Provider
+    <Provider
       value={{
         newChannel: withAcknowledgement((...args) => socket.volatile.emit('newChannel', ...args)),
         renameChannel: withAcknowledgement((...args) => socket.volatile.emit('renameChannel', ...args)),
@@ -35,8 +38,22 @@ const ApiProvider = ({ children, socket }) => {
       }}
     >
       {children}
-    </apiContext.Provider>
+    </Provider>
   );
 };
 
-export default ApiProvider;
+const useAPI = () => useContext(apiContext);
+
+const events = {
+  NEW_MESSAGE: 'newMessage',
+  NEW_CHANNEL: 'newChannel',
+  RENAME_CHANNEL: 'renameChannel',
+  REMOVE_CHANNEL: 'removeChannel',
+};
+
+export { default as routes } from './routes.js';
+export {
+  ApiProvider,
+  useAPI,
+  events,
+};

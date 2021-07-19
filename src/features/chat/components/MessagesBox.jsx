@@ -4,6 +4,7 @@ import { messageSelectors } from '../Slice.js';
 
 const MessagesBox = () => {
   const currentChannelMessages = useSelector(messageSelectors.getCurrentChannelMessages);
+
   return (
     <div id="message-box" className="chat-messages overflow-auto px-5 ">
       {currentChannelMessages

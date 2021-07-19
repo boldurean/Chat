@@ -5,17 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useAPI } from '../../../../services/api';
-import { logger } from '../../../../services/logger';
-import { channelsActions, channelsSelectors } from '../../index.js';
-import useModal from './useModal.js';
+import { useLogger } from '../../../../services/logger';
+import { actions, channelsSelectors } from '../../Slice.js';
+import { useModal } from './ChannelsModalProvider.jsx';
 
 const Add = () => {
   const { hideModal } = useModal();
   const API = useAPI();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const logger = useLogger();
   const existingChannelNames = useSelector(channelsSelectors.getChannelNames);
-  const { switchChannel } = channelsActions;
+  const { switchChannel } = actions;
 
   const formik = useFormik({
     initialValues: {
@@ -38,7 +39,6 @@ const Add = () => {
         hideModal();
         dispatch(switchChannel(id));
       }).catch((err) => {
-        console.error(err);
         logger.error(err);
         return err;
       }),
@@ -74,7 +74,12 @@ const Add = () => {
               type="text"
               placeholder={t('channels.channelName')}
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
+            <Form.Control.Feedback
+              type="invalid"
+              data-testid="invalid-feedback"
+            >
+              {formik.errors.body}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button className="btn btn-secondary mx-2" onClick={hideModal}>

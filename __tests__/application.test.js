@@ -128,7 +128,6 @@ describe('registration', () => {
     );
 
     userEvent.click(await screen.findByRole('link', { name: /Регистрация/i }));
-    expect(true).toBe(true);
     await waitFor(() => {
       expect(window.location.pathname).toBe('/signup');
     });
@@ -192,6 +191,15 @@ describe('chat', () => {
     expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
   });
 
+  test('adding channel with existing name', async () => {
+    userEvent.click(await screen.findByRole('button', { name: '+' }));
+    userEvent.type(await screen.findByTestId('add-channel'), 'random');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    await waitFor(async () => {
+      expect(await screen.findByTestId('invalid-feedback')).toBeInTheDocument();
+    });
+  });
+
   test('renaming channel', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
@@ -202,6 +210,19 @@ describe('chat', () => {
     userEvent.type(await screen.findByTestId('rename-channel'), 'renamed channel');
     userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
     expect(await screen.findByRole('button', { name: /renamed channel/i })).toBeInTheDocument();
+  });
+
+  test('renaming channel to an existing name', async () => {
+    userEvent.click(await screen.findByRole('button', { name: '+' }));
+    userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByTestId('dropdown'));
+    userEvent.click(await screen.findByRole('button', { name: /Переименовать/i }));
+    userEvent.type(await screen.findByTestId('rename-channel'), 'general');
+    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    await waitFor(async () => {
+      expect(await screen.findByTestId('invalid-feedback')).toBeInTheDocument();
+    });
   });
 
   test('removing channel', async () => {
