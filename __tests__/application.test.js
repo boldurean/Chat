@@ -41,6 +41,7 @@ const mockSingin = (_req, res, ctx) => res(
 );
 
 beforeAll(() => {
+  Element.prototype.scrollIntoView = jest.fn();
   server.listen({
     onUnhandledRequest: (req) => {
       console.error(`There is no handler for "${req.url.href}"`);
