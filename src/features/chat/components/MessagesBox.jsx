@@ -19,12 +19,12 @@ const MessagesBox = () => {
   return (
     <div ref={messageBoxRef} id="message-box" className="chat-messages overflow-auto px-5 ">
       {currentChannelMessages
-        && currentChannelMessages.map((msg) => (
-          <div key={msg.id} className="text-break mb-2">
-            <b>{`${msg.username}: `}</b>
-            {msg.text}
-          </div>
-        ))}
+      && currentChannelMessages.map((msg) => (
+        <div key={msg.id} className="text-break mb-2">
+          <b>{`${msg.username}: `}</b>
+          {msg.text}
+        </div>
+      ))}
     </div>
   );
 };

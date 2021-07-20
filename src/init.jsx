@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import React from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
+import * as yup from 'yup';
 import { ApiProvider, events } from './services/api';
 import { AuthProvider } from './services/auth';
 import resources from './locales';
@@ -17,6 +18,16 @@ const init = async (socket) => {
   await i18n.use(initReactI18next).init({
     resources,
     lng: 'ru',
+  }).then(() => {
+    yup.setLocale({
+      mixed: {
+        required: i18n.t('errors.required'),
+      },
+      string: {
+        min: ({ min }) => i18n.t('errors.fromTo', { min, max: 20 }),
+        max: ({ max }) => i18n.t('errors.fromTo', { min: 3, max }),
+      },
+    });
   });
 
   const store = createStore();

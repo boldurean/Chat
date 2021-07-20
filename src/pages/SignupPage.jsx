@@ -30,17 +30,17 @@ const SignupPage = () => {
     validationSchema: yup.object({
       username: yup
         .string()
-        .min(3, t('errors.fromTo', { min: 3, max: 20 }))
-        .max(20, t('errors.fromTo', { min: 3, max: 20 }))
-        .required(t('errors.required')),
+        .min(3)
+        .max(20)
+        .required(),
       password: yup
         .string()
         .min(6, t('errors.from', { min: 6 }))
-        .required(t('errors.required')),
+        .required(),
       passwordConfirmation: yup
         .string()
         .oneOf([yup.ref('password'), null], t('errors.matchPassword'))
-        .required(t('errors.required')),
+        .required(),
     }),
     onSubmit: async (values) => {
       setAuthFailed(false);

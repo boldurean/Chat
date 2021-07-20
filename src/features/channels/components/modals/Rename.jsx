@@ -22,12 +22,10 @@ const Rename = () => {
     },
     validationSchema: yup.object().shape({
       body: yup
-        .string()
-        .min(3, t('errors.fromTo', { min: 3, max: 20 }))
-        .max(20, t('errors.fromTo', { min: 3, max: 20 }))
+        .string().min(3).max(20)
         .notOneOf(channelNames, t('errors.notOneOf'))
         .trim()
-        .required(t('errors.required')),
+        .required(),
     }),
     validateOnChange: false,
     validateOnBlur: false,

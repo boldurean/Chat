@@ -30,8 +30,8 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema: yup.object({
-      username: yup.string().required(t('errors.required')),
-      password: yup.string().required(t('errors.required')),
+      username: yup.string().required(),
+      password: yup.string().required(),
     }),
     onSubmit: async (values) => {
       setAuthFailed(false);
