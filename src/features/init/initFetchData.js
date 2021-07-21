@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { routes } from '../../services/api/index.jsx';
+import { routes } from '../../services/api.jsx';
 
 export const initFetchData = createAsyncThunk(
   'initFetchData',

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useAPI } from '../../../../services/api';
-import { useLogger } from '../../../../services/logger';
+import { useAPI } from '../../../../services/api.jsx';
+import { useLogger } from '../../../../services/logger.jsx';
 import { useModal } from './ChannelsModalProvider.jsx';
 
 const Remove = () => {

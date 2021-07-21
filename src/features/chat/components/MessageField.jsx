@@ -5,9 +5,9 @@ import {
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useAPI } from '../../../services/api';
-import { useAuth } from '../../../services/auth';
-import { useLogger } from '../../../services/logger';
+import { useAPI } from '../../../services/api.jsx';
+import { useAuth } from '../../../services/auth.jsx';
+import { useLogger } from '../../../services/logger.jsx';
 import { channelsSelectors } from '../../channels';
 
 const MessageField = () => {
@@ -33,7 +33,6 @@ const MessageField = () => {
         .catch((err) => {
           formik.setSubmitting(false);
           logger.error(err);
-          return err;
         });
     },
   });

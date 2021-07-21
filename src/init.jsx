@@ -4,13 +4,13 @@ import React from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
 import * as yup from 'yup';
-import { ApiProvider, events } from './services/api';
-import { AuthProvider } from './services/auth';
+import { ApiProvider, events } from './services/api.jsx';
+import { AuthProvider } from './services/auth.jsx';
 import resources from './locales';
 import App from './App.jsx';
 import { channelsActions } from './features/channels';
 import { messagesActions } from './features/chat';
-import { LoggerProvider } from './services/logger';
+import { LoggerProvider } from './services/logger.jsx';
 import createStore from './store.js';
 
 const init = async (socket) => {
@@ -18,16 +18,15 @@ const init = async (socket) => {
   await i18n.use(initReactI18next).init({
     resources,
     lng: 'ru',
-  }).then(() => {
-    yup.setLocale({
-      mixed: {
-        required: i18n.t('errors.required'),
-      },
-      string: {
-        min: ({ min }) => i18n.t('errors.fromTo', { min, max: 20 }),
-        max: ({ max }) => i18n.t('errors.fromTo', { min: 3, max }),
-      },
-    });
+  });
+  await yup.setLocale({
+    mixed: {
+      required: i18n.t('errors.required'),
+    },
+    string: {
+      min: ({ min }) => i18n.t('errors.fromTo', { min, max: 20 }),
+      max: ({ max }) => i18n.t('errors.fromTo', { min: 3, max }),
+    },
   });
 
   const store = createStore();

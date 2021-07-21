@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux';
 import { Channels } from '../features/channels';
 import { MessagesBox, MessagesCounter, MessageField } from '../features/chat';
 import { fetchData } from '../features/init';
-import { useAuth } from '../services/auth';
-import { useLogger } from '../services/logger';
+import { useAuth } from '../services/auth.jsx';
+import { useLogger } from '../services/logger.jsx';
 
 const Chat = () => {
   const [isDataReceived, setIsDataReceived] = useState(false);

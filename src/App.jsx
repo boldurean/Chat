@@ -9,7 +9,7 @@ import {
 } from './pages';
 import { PrivateRoute } from './components';
 import routes from './routes.js';
-import { useAuth } from './services/auth';
+import { useAuth } from './services/auth.jsx';
 
 const App = () => {
   const { t } = useTranslation();

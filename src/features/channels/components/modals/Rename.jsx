@@ -4,8 +4,8 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-import { useAPI } from '../../../../services/api';
-import { useLogger } from '../../../../services/logger';
+import { useAPI } from '../../../../services/api.jsx';
+import { useLogger } from '../../../../services/logger.jsx';
 import { channelsSelectors } from '../../Slice.js';
 import { useModal } from './ChannelsModalProvider.jsx';
 

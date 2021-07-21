@@ -7,8 +7,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
-import { useAuth } from '../services/auth';
-import { useLogger } from '../services/logger';
+import { useAuth } from '../services/auth.jsx';
+import { useLogger } from '../services/logger.jsx';
 import logo from '../img/login.jpg';
 
 const LoginPage = () => {

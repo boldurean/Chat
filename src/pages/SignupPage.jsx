@@ -7,9 +7,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
-import { useAuth } from '../services/auth';
+import { useAuth } from '../services/auth.jsx';
 import logo from '../img/register.jpg';
-import { useLogger } from '../services/logger';
+import { useLogger } from '../services/logger.jsx';
 
 const SignupPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
