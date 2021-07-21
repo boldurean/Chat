@@ -14,6 +14,9 @@
     "start": "node bin/slack.js",
     "test-coverage": "npm test -- --coverage --coverageProvider=v8"
   },
+  "simple-git-hooks": {
+    "pre-commit": "make lint && make test"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:boldurean/frontend-project-lvl4.git"
