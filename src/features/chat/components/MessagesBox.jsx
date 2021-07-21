@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { channelsSelectors } from '../../channels';
 import { messageSelectors } from '../Slice.js';
 
 const MessagesBox = () => {
   const currentChannelMessages = useSelector(messageSelectors.getCurrentChannelMessages);
+  const currentChannelId = useSelector(channelsSelectors.getCurrentChannelId);
 
   const messageBoxRef = useRef();
 
@@ -14,7 +16,7 @@ const MessagesBox = () => {
 
   useEffect(() => {
     scrollToBottom(messageBoxRef.current);
-  }, [currentChannelMessages]);
+  }, [currentChannelId]);
 
   return (
     <div ref={messageBoxRef} id="message-box" className="chat-messages overflow-auto px-5 ">
