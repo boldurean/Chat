@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import bug from '../img/bug.png';
+import { routes } from '../services/api.jsx';
 
 const ErrorPage = () => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const ErrorPage = () => {
       <button
         type="button"
         className="btn btn-primary btn-md text-white mt-4"
-        onClick={() => history.push('/')}
+        onClick={() => history.push(routes.chatPath)}
       >
         {t('buttons.goHome')}
       </button>

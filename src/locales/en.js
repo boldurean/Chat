@@ -22,8 +22,8 @@ export default {
     },
     errors: {
       required: 'Required field',
-      fromTo: 'From {{min}} to {{max}} symbols',
-      from: 'From {{min}} symbols',
+      range: 'From {{min}} to {{max}} symbols',
+      minLength: 'At least {{min}} symbols',
       matchPassword: 'Passwords mush match',
       userExists: 'User with this name already exists',
       notOneOf: 'Channel with this name already exists',

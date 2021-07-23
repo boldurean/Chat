@@ -22,7 +22,9 @@ const Rename = () => {
     },
     validationSchema: yup.object().shape({
       body: yup
-        .string().min(3).max(20)
+        .string()
+        .min(3, t('errors.range', { min: 3, max: 20 }))
+        .max(20, t('errors.range', { min: 3, max: 20 }))
         .notOneOf(channelNames, t('errors.notOneOf'))
         .trim()
         .required(),
@@ -30,12 +32,15 @@ const Rename = () => {
     validateOnChange: false,
     validateOnBlur: false,
 
-    onSubmit: async (values) => API.renameChannel({ id: channel.id, name: values.body })
-      .then(hideModal)
-      .catch((err) => {
+    onSubmit: async (values) => {
+      try {
+        await API.renameChannel({ id: channel.id, name: values.body });
+        return hideModal();
+      } catch (err) {
         logger.error(err);
         return err;
-      }),
+      }
+    },
   });
 
   const inputElementRef = useRef();

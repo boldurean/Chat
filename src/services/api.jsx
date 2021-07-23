@@ -51,9 +51,19 @@ const events = {
   REMOVE_CHANNEL: 'removeChannel',
 };
 
-export { default as routes } from './routes.js';
+const host = '';
+const prefix = 'api/v1';
+
+const routes = {
+  chatPath: '/',
+  loginPath: () => [host, prefix, 'login'].join('/'),
+  signupPath: () => [host, prefix, 'signup'].join('/'),
+  dataPath: () => [host, prefix, 'data'].join('/'),
+};
+
 export {
   ApiProvider,
   useAPI,
   events,
+  routes,
 };

@@ -18,7 +18,9 @@ const Chat = () => {
   const { userId } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchData({ logger, userId })).then(() => setIsDataReceived(true));
+    if (userId) {
+      dispatch(fetchData({ logger, userId })).then(() => setIsDataReceived(true));
+    }
     return () => setIsDataReceived(true);
   }, [userId, dispatch, logger]);
 

@@ -12,17 +12,18 @@ const Remove = () => {
   const API = useAPI();
   const logger = useLogger();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { channel } = modal;
     setIsSubmitting(true);
-    return API.removeChannel(channel)
-      .then(hideModal)
-      .catch((err) => {
-        setIsSubmitting(false);
-        logger.error(err);
-        return err;
-      });
+    try {
+      await API.removeChannel(channel);
+      return hideModal();
+    } catch (err) {
+      setIsSubmitting(false);
+      logger.error(err);
+      return err;
+    }
   };
 
   return (

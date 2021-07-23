@@ -24,7 +24,9 @@ const Add = () => {
     },
     validationSchema: yup.object().shape({
       body: yup
-        .string().min(3).max(20)
+        .string()
+        .min(3, t('errors.range', { min: 3, max: 20 }))
+        .max(20, t('errors.range', { min: 3, max: 20 }))
         .notOneOf(existingChannelNames, t('errors.notOneOf'))
         .trim()
         .required(),
@@ -32,14 +34,16 @@ const Add = () => {
     validateOnChange: false,
     validateOnBlur: false,
 
-    onSubmit: (values) => API.newChannel({ name: values.body })
-      .then(({ id }) => {
+    onSubmit: async (values) => {
+      try {
+        const { id } = await API.newChannel({ name: values.body });
         hideModal();
-        dispatch(switchChannel(id));
-      }).catch((err) => {
+        return dispatch(switchChannel(id));
+      } catch (err) {
         logger.error(err);
         return err;
-      }),
+      }
+    },
   });
 
   const inputElementRef = useRef();

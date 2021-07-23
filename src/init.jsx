@@ -19,13 +19,10 @@ const init = async (socket) => {
     resources,
     lng: 'ru',
   });
-  await yup.setLocale({
+
+  yup.setLocale({
     mixed: {
       required: i18n.t('errors.required'),
-    },
-    string: {
-      min: ({ min }) => i18n.t('errors.fromTo', { min, max: 20 }),
-      max: ({ max }) => i18n.t('errors.fromTo', { min: 3, max }),
     },
   });
 

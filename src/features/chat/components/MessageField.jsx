@@ -24,16 +24,16 @@ const MessageField = () => {
     initialValues: {
       body: '',
     },
-    onSubmit: (values) => {
-      API.newMessage({ text: values.body, channelId: currentChannelId, username })
-        .then(() => {
-          formik.resetForm();
-          inputElementRef.current.focus();
-        })
-        .catch((err) => {
-          formik.setSubmitting(false);
-          logger.error(err);
-        });
+    onSubmit: async (values) => {
+      try {
+        await API.newMessage({ text: values.body, channelId: currentChannelId, username });
+        formik.resetForm();
+        return inputElementRef.current.focus();
+      } catch (err) {
+        formik.setSubmitting(false);
+        logger.error(err);
+        return err;
+      }
     },
   });
 

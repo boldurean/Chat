@@ -7,6 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
+import { routes } from '../services/api.jsx';
 import { useAuth } from '../services/auth.jsx';
 import logo from '../img/register.jpg';
 import { useLogger } from '../services/logger.jsx';
@@ -30,12 +31,12 @@ const SignupPage = () => {
     validationSchema: yup.object({
       username: yup
         .string()
-        .min(3)
-        .max(20)
+        .min(3, t('errors.range', { min: 3, max: 20 }))
+        .max(20, t('errors.range', { min: 3, max: 20 }))
         .required(),
       password: yup
         .string()
-        .min(6, t('errors.from', { min: 6 }))
+        .min(6, t('errors.minLength', { min: 6 }))
         .required(),
       passwordConfirmation: yup
         .string()
@@ -47,7 +48,7 @@ const SignupPage = () => {
       setUserExisting(false);
       try {
         await auth.signUp(values);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { from } = location.state || { from: { pathname: routes.chatPath } };
         history.replace(from);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
@@ -60,7 +61,6 @@ const SignupPage = () => {
           logger.error(err);
           return;
         }
-        logger.error(err);
         throw err;
       }
     },
