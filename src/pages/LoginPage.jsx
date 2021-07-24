@@ -7,6 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
+import routes from '../routes.js';
 import { useAuth } from '../services/auth.jsx';
 import { useLogger } from '../services/logger.jsx';
 import logo from '../img/login.jpg';
@@ -37,13 +38,12 @@ const LoginPage = () => {
       setAuthFailed(false);
       try {
         await auth.logIn(values);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { from } = location.state || { from: { pathname: routes.chatPage } };
         history.replace(from);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
-          logger.error(err);
           return;
         }
         logger.error(err);
@@ -106,7 +106,7 @@ const LoginPage = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span>
-                  {t('texts.do not have an account?')}
+                  {t('texts.withoutAccount')}
                   {' '}
                 </span>
                 <Link to="signup">{t('texts.register')}</Link>

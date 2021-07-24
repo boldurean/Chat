@@ -2,31 +2,31 @@ import React, { createContext, useContext } from 'react';
 
 const apiContext = createContext({});
 
+const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {
+  // eslint-disable-next-line functional/no-let
+  let state = 'pending';
+  const error = new Error('Network error');
+
+  const timer = setTimeout(() => {
+    state = 'rejected';
+    reject(error);
+  }, 3000);
+
+  socketFunc(...args, (response) => {
+    if (state !== 'pending') return;
+
+    clearTimeout(timer);
+
+    if (response.status === 'ok') {
+      state = 'resolved';
+      resolve(response.data);
+    }
+    reject(error);
+  });
+});
+
 const ApiProvider = ({ children, socket }) => {
   const { Provider } = apiContext;
-
-  const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {
-    // eslint-disable-next-line functional/no-let
-    let state = 'pending';
-    const error = new Error('Network error');
-
-    const timer = setTimeout(() => {
-      state = 'rejected';
-      reject(error);
-    }, 3000);
-
-    socketFunc(...args, (response) => {
-      if (state !== 'pending') return;
-
-      clearTimeout(timer);
-
-      if (response.status === 'ok') {
-        state = 'resolved';
-        resolve(response.data);
-      }
-      reject(error);
-    });
-  });
 
   return (
     <Provider

@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import React from 'react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
+import Rollbar from 'rollbar';
 import * as yup from 'yup';
 import { ApiProvider, events } from './services/api.jsx';
 import { AuthProvider } from './services/auth.jsx';
@@ -49,12 +50,25 @@ const init = async (socket) => {
     store.dispatch(renameChannel(data));
   });
 
+  const rollbar = new Rollbar({
+    accessToken: process.env.ROLLBAR_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
+  });
+
+  const currentLogger = (process.env.NODE_ENV === 'production')
+    ? rollbar
+    : console;
+
   return (
     <StoreProvider store={store}>
       <ApiProvider socket={socket}>
         <I18nextProvider i18n={i18n}>
           <AuthProvider>
-            <LoggerProvider>
+            <LoggerProvider logger={currentLogger}>
               <App />
             </LoggerProvider>
           </AuthProvider>

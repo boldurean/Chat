@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useAPI } from '../../../../services/api.jsx';
 import { useLogger } from '../../../../services/logger.jsx';
-import { channelsSelectors } from '../../Slice.js';
+import { selectors } from '../../Slice.js';
 import { useModal } from './ChannelsModalProvider.jsx';
 
 const Rename = () => {
   const { modal: { channel }, hideModal } = useModal();
   const { t } = useTranslation();
-  const channelNames = useSelector(channelsSelectors.getChannelNames);
+  const channelNames = useSelector(selectors.getChannelNames);
   const API = useAPI();
   const logger = useLogger();
 
@@ -25,7 +25,7 @@ const Rename = () => {
         .string()
         .min(3, t('errors.range', { min: 3, max: 20 }))
         .max(20, t('errors.range', { min: 3, max: 20 }))
-        .notOneOf(channelNames, t('errors.notOneOf'))
+        .notOneOf(channelNames, t('errors.channelUniq'))
         .trim()
         .required(),
     }),

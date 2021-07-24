@@ -19,7 +19,7 @@ const App = () => {
     <Router>
       <div className="d-flex flex-column h-100">
         <Navbar bsPrefix="shadow-sm navbar navbar-light bg-white mb-2 px-2" expand="true">
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand as={Link} to={routes.chatPage}>
             Hexlet Chat
           </Navbar.Brand>
           {auth.isLoggedIn && <Button onClick={auth.logOut}>{t('buttons.logout')}</Button>}

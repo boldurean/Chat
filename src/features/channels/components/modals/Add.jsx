@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useAPI } from '../../../../services/api.jsx';
 import { useLogger } from '../../../../services/logger.jsx';
-import { actions, channelsSelectors } from '../../Slice.js';
+import { actions, selectors } from '../../Slice.js';
 import { useModal } from './ChannelsModalProvider.jsx';
 
 const Add = () => {
@@ -15,7 +15,7 @@ const Add = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const logger = useLogger();
-  const existingChannelNames = useSelector(channelsSelectors.getChannelNames);
+  const existingChannelNames = useSelector(selectors.getChannelNames);
   const { switchChannel } = actions;
 
   const formik = useFormik({
@@ -27,7 +27,7 @@ const Add = () => {
         .string()
         .min(3, t('errors.range', { min: 3, max: 20 }))
         .max(20, t('errors.range', { min: 3, max: 20 }))
-        .notOneOf(existingChannelNames, t('errors.notOneOf'))
+        .notOneOf(existingChannelNames, t('errors.channelUniq'))
         .trim()
         .required(),
     }),

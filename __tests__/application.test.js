@@ -233,9 +233,10 @@ describe('chat', () => {
     userEvent.click(await screen.findByTestId('dropdown'));
     expect(await screen.findByText(/Удалить/i)).toBeInTheDocument();
     userEvent.click(await screen.findByRole('button', { name: /Удалить/i }));
+    expect(await screen.findByTestId('remove-button')).toBeInTheDocument();
     userEvent.click(await screen.findByTestId('remove-button'));
     await waitFor(() => {
-      expect(screen.queryByText(/test channel/i)).not.toBeInTheDocument();
+      expect(screen.queryByText('test channel')).not.toBeInTheDocument();
     });
   });
 });

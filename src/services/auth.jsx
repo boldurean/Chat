@@ -4,32 +4,34 @@ import { routes } from './api.jsx';
 
 const authContext = createContext({});
 
+const userId = 'userId';
+
 const AuthProvider = ({ children }) => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  const [isLoggedIn, setIsLoggedIn] = useState(userId !== null);
+  const user = JSON.parse(localStorage.getItem(userId));
+  const [isLoggedIn, setIsLoggedIn] = useState(user !== null);
   const { Provider } = authContext;
 
   const logIn = async (loginData) => {
     const res = await axios.post(routes.loginPath(), loginData);
-    localStorage.setItem('userId', JSON.stringify(res.data));
+    localStorage.setItem(userId, JSON.stringify(res.data));
     setIsLoggedIn(true);
   };
 
   const signUp = async (signingData) => {
     const res = await axios.post(routes.signupPath(), signingData);
-    localStorage.setItem('userId', JSON.stringify(res.data));
+    localStorage.setItem(userId, JSON.stringify(res.data));
     setIsLoggedIn(true);
   };
 
   const logOut = () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem(userId);
     setIsLoggedIn(false);
   };
 
   return (
     <Provider
       value={{
-        userId,
+        user,
         isLoggedIn,
         logIn,
         signUp,

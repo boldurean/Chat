@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions, channelsSelectors } from '../Slice.js';
+import { actions, selectors } from '../Slice.js';
 import { useModal } from './modals/ChannelsModalProvider.jsx';
 
 const ChannelButton = ({ channel, currentChannelId, showModal }) => {
@@ -62,8 +62,8 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 
 const ChannelsList = () => {
   const { showModal } = useModal();
-  const channelsList = useSelector(channelsSelectors.getChannels);
-  const currentChannelId = useSelector(channelsSelectors.getCurrentChannelId);
+  const channelsList = useSelector(selectors.getChannels);
+  const currentChannelId = useSelector(selectors.getCurrentChannelId);
 
   return (
     <Nav as="ul" className="flex-column nav-pills nav-fill px-2">

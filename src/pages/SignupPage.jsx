@@ -58,9 +58,9 @@ const SignupPage = () => {
         if (err.isAxiosError && err.response.status === 409) {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
-          logger.error(err);
           return;
         }
+        logger.error(err);
         throw err;
       }
     },

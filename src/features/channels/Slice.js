@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { fetchData } from '../init/index.js';
+import _ from 'lodash';
+import fetchData from '../init.js';
 
 export const slice = createSlice({
   name: 'channels',
@@ -18,8 +19,11 @@ export const slice = createSlice({
       channel.name = action.payload.name;
     },
     removeChannel: (state, { payload }) => {
-      state.channelsList = state.channelsList.filter((channel) => channel.id !== payload.id);
-      state.currentChannelId = state.currentChannelId === payload.id ? 1 : state.currentChannelId;
+      state.channelsList = state.channelsList.filter((c) => c.id !== payload.id);
+      if (state.currentChannelId === payload.id) {
+        const generalChannel = _.first(state.channelsList);
+        state.currentChannelId = generalChannel.id;
+      }
     },
     switchChannel: (state, { payload }) => {
       state.currentChannelId = payload;
@@ -50,7 +54,7 @@ const getCurrentChannelName = createSelector(
   },
 );
 
-export const channelsSelectors = {
+export const selectors = {
   getChannels,
   getCurrentChannelId,
   getCurrentChannelName,

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Channels } from '../features/channels';
 import { MessagesBox, MessagesCounter, MessageField } from '../features/chat';
-import { fetchData } from '../features/init';
+import fetchData from '../features/init.js';
 import { useAuth } from '../services/auth.jsx';
 import { useLogger } from '../services/logger.jsx';
 
@@ -15,14 +15,18 @@ const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const logger = useLogger();
-  const { userId } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (userId) {
-      dispatch(fetchData({ logger, userId })).then(() => setIsDataReceived(true));
+    if (user) {
+      const initFetchData = async () => {
+        await dispatch(fetchData({ logger, user }));
+        setIsDataReceived(true);
+      };
+      initFetchData();
     }
     return () => setIsDataReceived(true);
-  }, [userId, dispatch, logger]);
+  }, [dispatch, logger, user]);
 
   return isDataReceived
     ? (

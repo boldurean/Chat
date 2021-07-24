@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { channelsSelectors } from '../../channels';
-import { messageSelectors } from '../Slice.js';
+import { selectors as channelsSelectors } from '../../channels';
+import { selectors } from '../Slice.js';
 
 const MessagesBox = () => {
-  const currentChannelMessages = useSelector(messageSelectors.getCurrentChannelMessages);
+  const currentChannelMessages = useSelector(selectors.getCurrentChannelMessages);
   const currentChannelId = useSelector(channelsSelectors.getCurrentChannelId);
 
   const messageBoxRef = useRef();
@@ -20,8 +20,7 @@ const MessagesBox = () => {
 
   return (
     <div ref={messageBoxRef} id="message-box" className="chat-messages overflow-auto px-5 ">
-      {currentChannelMessages
-      && currentChannelMessages.map((msg) => (
+      {currentChannelMessages.map((msg) => (
         <div key={msg.id} className="text-break mb-2">
           <b>{`${msg.username}: `}</b>
           {msg.text}
