@@ -4,18 +4,13 @@ import { routes } from '../services/api.jsx';
 
 const fetchData = createAsyncThunk(
   'init',
-  async ({ logger, user }) => {
-    try {
-      const req = await axios.get(routes.dataPath(), {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      return { ...req.data };
-    } catch (e) {
-      logger.error(e);
-      throw e;
-    }
+  async ({ user }) => {
+    const req = await axios.get(routes.dataPath(), {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    return { ...req.data };
   },
 );
 

@@ -10,7 +10,6 @@ import * as yup from 'yup';
 import { routes } from '../services/api.jsx';
 import { useAuth } from '../services/auth.jsx';
 import logo from '../img/register.jpg';
-import { useLogger } from '../services/logger.jsx';
 
 const SignupPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -20,7 +19,6 @@ const SignupPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
-  const logger = useLogger();
 
   const formik = useFormik({
     initialValues: {
@@ -60,7 +58,6 @@ const SignupPage = () => {
           formik.errors.passwordConfirmation = t('errors.userExists');
           return;
         }
-        logger.error(err);
         throw err;
       }
     },

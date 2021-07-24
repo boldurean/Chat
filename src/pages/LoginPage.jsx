@@ -9,7 +9,6 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import routes from '../routes.js';
 import { useAuth } from '../services/auth.jsx';
-import { useLogger } from '../services/logger.jsx';
 import logo from '../img/login.jpg';
 
 const LoginPage = () => {
@@ -19,7 +18,6 @@ const LoginPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
-  const logger = useLogger();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -46,7 +44,7 @@ const LoginPage = () => {
           inputRef.current.select();
           return;
         }
-        logger.error(err);
+        throw err;
       }
     },
   });
