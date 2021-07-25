@@ -28,11 +28,10 @@ const MessageField = () => {
       try {
         await API.newMessage({ text: values.body, channelId: currentChannelId, username });
         formik.resetForm();
-        return inputElementRef.current.focus();
+        inputElementRef.current.focus();
       } catch (err) {
         formik.setSubmitting(false);
         logger.error(err);
-        return err;
       }
     },
   });

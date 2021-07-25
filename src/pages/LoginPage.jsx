@@ -58,7 +58,10 @@ const LoginPage = () => {
               <div className="col-12 col-md-6 d-flex align-items-center rounded-circle justify-content-center">
                 <img className="rounded-circle h-auto" src={logo} alt="signin logo" />
               </div>
-              <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+              <Form
+                onSubmit={formik.handleSubmit}
+                className="col-12 col-md-6 mt-3 mt-mb-0"
+              >
                 <h1 className="text-center mb-4">{t('texts.login')}</h1>
                 <FloatingLabel
                   controlId="floatingInput"
@@ -74,6 +77,7 @@ const LoginPage = () => {
                     type="text"
                     placeholder={t('forms.nickname')}
                     isInvalid={authFailed}
+                    autocomplete="username"
                   />
                 </FloatingLabel>
                 <FloatingLabel
@@ -89,6 +93,7 @@ const LoginPage = () => {
                     type="password"
                     placeholder={t('forms.password')}
                     isInvalid={authFailed}
+                    autocomplete="current-password"
                   />
                   {authFailed && (
                   <Form.Control.Feedback type="invalid" tooltip>

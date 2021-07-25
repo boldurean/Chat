@@ -13,7 +13,7 @@ export default {
       rename: 'Переименовать',
       remove: 'Удалить',
       send: 'Отправить',
-      goHome: 'Take me home',
+      goHome: 'Вернуться на главную',
     },
     forms: {
       nickname: 'Ваш ник',

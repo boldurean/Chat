@@ -50,7 +50,7 @@ const init = async (socket) => {
     store.dispatch(renameChannel(data));
   });
 
-  const rollbar = new Rollbar({
+  const startLogger = () => new Rollbar({
     accessToken: process.env.ROLLBAR_TOKEN,
     captureUncaught: true,
     captureUnhandledRejections: true,
@@ -60,7 +60,7 @@ const init = async (socket) => {
   });
 
   const currentLogger = (process.env.NODE_ENV === 'production')
-    ? rollbar
+    ? startLogger()
     : console;
 
   return (

@@ -6,7 +6,7 @@ import { render } from 'react-dom';
 import io from 'socket.io-client';
 import init from './init.jsx';
 
-const socket = io.connect(window.location.host);
+const socket = io.connect();
 
 const runApp = async () => {
   render(
