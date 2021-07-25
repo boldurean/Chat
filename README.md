@@ -19,6 +19,7 @@ make install
 
 ```js
 make start
+// open localhost:8080
 ```
 ### Run tests and coverage:
 

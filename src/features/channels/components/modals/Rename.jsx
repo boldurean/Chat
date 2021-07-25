@@ -35,10 +35,9 @@ const Rename = () => {
     onSubmit: async (values) => {
       try {
         await API.renameChannel({ id: channel.id, name: values.body });
-        return hideModal();
+        hideModal();
       } catch (err) {
         logger.error(err);
-        return err;
       }
     },
   });

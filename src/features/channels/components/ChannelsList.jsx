@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions, selectors } from '../Slice.js';
 import { useModal } from './modals/ChannelsModalProvider.jsx';
 
-const ChannelButton = ({ channel, currentChannelId, showModal }) => {
+const ChannelButton = ({ channel }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { showModal } = useModal();
+  const currentChannelId = useSelector(selectors.getCurrentChannelId);
   const { switchChannel } = actions;
+
   const buttonType = channel.id === currentChannelId ? 'btn btn-secondary' : 'btn';
 
   if (!channel.removable) {
@@ -61,9 +64,7 @@ const ChannelButton = ({ channel, currentChannelId, showModal }) => {
 };
 
 const ChannelsList = () => {
-  const { showModal } = useModal();
   const channelsList = useSelector(selectors.getChannels);
-  const currentChannelId = useSelector(selectors.getCurrentChannelId);
 
   return (
     <Nav as="ul" className="flex-column nav-pills nav-fill px-2">
@@ -71,8 +72,6 @@ const ChannelsList = () => {
         <ChannelButton
           key={channel.id}
           channel={channel}
-          currentChannelId={currentChannelId}
-          showModal={showModal}
         />
       ))}
     </Nav>

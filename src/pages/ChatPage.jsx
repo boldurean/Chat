@@ -25,6 +25,9 @@ const Chat = () => {
       };
       initFetchData();
     }
+    /* returnig DataRecieved to true as preventing of memory leak an unmounted spinner
+    * React (c) ¯\_(ツ)_/¯
+    */
     return () => setIsDataReceived(true);
   }, [dispatch, logger, user]);
 

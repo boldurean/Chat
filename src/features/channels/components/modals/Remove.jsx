@@ -18,11 +18,10 @@ const Remove = () => {
     setIsSubmitting(true);
     try {
       await API.removeChannel(channel);
-      return hideModal();
+      hideModal();
     } catch (err) {
       setIsSubmitting(false);
       logger.error(err);
-      return err;
     }
   };
 

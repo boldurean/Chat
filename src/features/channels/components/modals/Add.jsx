@@ -38,10 +38,9 @@ const Add = () => {
       try {
         const { id } = await API.newChannel({ name: values.body });
         hideModal();
-        return dispatch(switchChannel(id));
+        dispatch(switchChannel(id));
       } catch (err) {
         logger.error(err);
-        return err;
       }
     },
   });

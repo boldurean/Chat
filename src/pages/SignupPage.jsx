@@ -12,7 +12,6 @@ import { useAuth } from '../services/auth.jsx';
 import logo from '../img/register.jpg';
 
 const SignupPage = () => {
-  const [authFailed, setAuthFailed] = useState(false);
   const [userExisting, setUserExisting] = useState(false);
   const auth = useAuth();
   const { t } = useTranslation();
@@ -42,17 +41,12 @@ const SignupPage = () => {
         .required(),
     }),
     onSubmit: async (values) => {
-      setAuthFailed(false);
       setUserExisting(false);
       try {
         await auth.signUp(values);
         const { from } = location.state || { from: { pathname: routes.chatPath } };
         history.replace(from);
       } catch (err) {
-        if (err.isAxiosError && err.response.status === 401) {
-          setAuthFailed(true);
-          return;
-        }
         if (err.isAxiosError && err.response.status === 409) {
           setUserExisting(true);
           formik.errors.passwordConfirmation = t('errors.userExists');
@@ -91,7 +85,8 @@ const SignupPage = () => {
                     onBlur={formik.handleBlur}
                     type="text"
                     placeholder={t('forms.username')}
-                    isInvalid={!!formik.errors.username || authFailed || userExisting}
+                    autoComplete="username"
+                    isInvalid={!!formik.errors.username || userExisting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.username}
@@ -109,7 +104,8 @@ const SignupPage = () => {
                     value={formik.values.password}
                     type="password"
                     placeholder={t('forms.password')}
-                    isInvalid={!!formik.errors.password || authFailed || userExisting}
+                    autoComplete="new-password"
+                    isInvalid={!!formik.errors.password || userExisting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.password}
@@ -127,7 +123,8 @@ const SignupPage = () => {
                     value={formik.values.passwordConfirmation}
                     type="password"
                     placeholder={t('forms.passwordConfirmation')}
-                    isInvalid={!!formik.errors.passwordConfirmation || authFailed || userExisting}
+                    autoComoplete="new-password"
+                    isInvalid={!!formik.errors.passwordConfirmation || userExisting}
                   />
                   {formik.errors.passwordConfirmation && (
                   <Form.Control.Feedback type="invalid" tooltip>
