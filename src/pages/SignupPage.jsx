@@ -123,7 +123,7 @@ const SignupPage = () => {
                     value={formik.values.passwordConfirmation}
                     type="password"
                     placeholder={t('forms.passwordConfirmation')}
-                    autoComoplete="new-password"
+                    autoComplete="new-password"
                     isInvalid={!!formik.errors.passwordConfirmation || userExisting}
                   />
                   {formik.errors.passwordConfirmation && (
