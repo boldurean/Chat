@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { first } from 'lodash';
+import first from 'lodash/first';
 import fetchData from '../init.js';
 
 export const slice = createSlice({
