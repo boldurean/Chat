@@ -5,11 +5,11 @@ import {
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useAPI } from '../../../services/api.jsx';
 import { useAuth } from '../../../services/auth.jsx';
 import { useLogger } from '../../../services/logger.jsx';
 import { selectors } from '../../channels';
-import arrow from '../../../img/send-message-arrow.svg';
 
 const MessageField = () => {
   const API = useAPI();
@@ -63,7 +63,7 @@ const MessageField = () => {
                 type="submit"
                 bsPrefix="btn btn-group-vertical"
               >
-                {arrow}
+                <ArrowRightSquare size={20} />
                 <span className="visually-hidden">{t('buttons.send')}</span>
               </Button>
             </ButtonGroup>
