@@ -4,6 +4,9 @@ export default {
       en: 'English',
       ru: 'Русский',
     },
+    navbar: {
+      brand: 'Hexlet Chat',
+    },
     buttons: {
       login: 'Войти',
       logout: 'Выйти',

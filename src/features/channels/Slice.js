@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { first } from 'lodash';
 import fetchData from '../init.js';
 
 export const slice = createSlice({
@@ -12,7 +12,6 @@ export const slice = createSlice({
   reducers: {
     newChannel: (state, { payload }) => {
       state.channelsList.push(payload);
-      state.currentChannelId = payload.id;
     },
     renameChannel: (state, action) => {
       const channel = state.channelsList.find((c) => c.id === action.payload.id);
@@ -21,7 +20,7 @@ export const slice = createSlice({
     removeChannel: (state, { payload }) => {
       state.channelsList = state.channelsList.filter((c) => c.id !== payload.id);
       if (state.currentChannelId === payload.id) {
-        const generalChannel = _.first(state.channelsList);
+        const generalChannel = first(state.channelsList);
         state.currentChannelId = generalChannel.id;
       }
     },
