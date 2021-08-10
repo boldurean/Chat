@@ -15,7 +15,7 @@ export default {
       cancel: 'Cancel',
       rename: 'Rename',
       remove: 'Delete',
-      send: 'Отправить',
+      send: 'Send',
       goHome: 'Take me home',
     },
     forms: {
@@ -28,12 +28,11 @@ export default {
       required: 'Required field',
       range: 'From {{min}} to {{max}} symbols',
       minLength: 'At least {{min}} symbols',
-      matchPassword: 'Passwords mush match',
+      matchPassword: 'Passwords must match',
       userExists: 'User with this name already exists',
-      notOneOf: 'Channel with this name already exists',
+      channelUniq: 'Channel with this name already exists',
       auth: 'Incorrect user or password',
       pageNotFound: 'We are sorry, the page you requested could not be found.Please go back to the homepage or contact us at v.boldurean@gmail.com',
-
     },
     texts: {
       login: 'Login',

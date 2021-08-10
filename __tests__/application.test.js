@@ -90,18 +90,18 @@ afterEach(() => {
 describe('auth', () => {
   test('login page on enter as guest', async () => {
     expect(window.location.pathname).toBe('/login');
-    expect(await screen.findByLabelText(/Ваш ник/i)).toBeInTheDocument();
-    expect(await screen.findByLabelText(/Пароль/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/Nickname/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/Password/i)).toBeInTheDocument();
   });
 
   test('handle login error', async () => {
     server.use(rest.post('/api/v1/login', (_req, res, ctx) => res(ctx.status(401))));
-    expect(screen.queryByText(/Неверные имя пользователя или пароль/i)).not.toBeInTheDocument();
-    userEvent.type(await screen.findByLabelText(/Ваш ник/i), 'guest');
-    userEvent.type(await screen.findByLabelText(/Пароль/i), 'pass');
-    userEvent.click(await screen.findByRole('button', { name: /Войти/i }));
+    expect(screen.queryByText(/Incorrect user or password/i)).not.toBeInTheDocument();
+    userEvent.type(await screen.findByLabelText(/Nickname/i), 'guest');
+    userEvent.type(await screen.findByLabelText(/Password/i), 'pass');
+    userEvent.click(await screen.findByRole('button', { name: /Log in/i }));
 
-    expect(await screen.findByText(/Неверные имя пользователя или пароль/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Incorrect user or password/i)).toBeInTheDocument();
   });
 
   test('successful login', async () => {
@@ -110,9 +110,9 @@ describe('auth', () => {
       rest.get('/api/v1/data', mockInitialData),
     );
 
-    userEvent.type(await screen.findByLabelText(/Ваш ник/i), 'user');
-    userEvent.type(await screen.findByLabelText(/Пароль/i), 'pass');
-    userEvent.click(await screen.findByRole('button', { name: /Войти/i }));
+    userEvent.type(await screen.findByLabelText(/Nickname/i), 'user');
+    userEvent.type(await screen.findByLabelText(/Password/i), 'pass');
+    userEvent.click(await screen.findByRole('button', { name: /Log in/i }));
 
     await waitFor(() => {
       expect(window.location.pathname).toBe('/');
@@ -127,31 +127,31 @@ describe('registration', () => {
       rest.get('/api/v1/data', mockInitialData),
     );
 
-    userEvent.click(await screen.findByRole('link', { name: /Регистрация/i }));
+    userEvent.click(await screen.findByRole('link', { name: /Register/i }));
     await waitFor(() => {
       expect(window.location.pathname).toBe('/signup');
     });
-    userEvent.type(await screen.findByLabelText(/Имя пользователя/i), 'user');
-    userEvent.type(await screen.findByLabelText(/^Пароль$/i), 'password');
-    userEvent.type(await screen.findByLabelText(/Подтвердите пароль/i), 'password');
-    userEvent.click(await screen.findByRole('button', { name: /Зарегистрироваться/i }));
+    userEvent.type(await screen.findByLabelText(/Username/i), 'user');
+    userEvent.type(await screen.findByLabelText(/^Password$/i), 'password');
+    userEvent.type(await screen.findByLabelText(/Confirm password/i), 'password');
+    userEvent.click(await screen.findByRole('button', { name: /Sign up/i }));
     await waitFor(() => {
       expect(window.location.pathname).toBe('/');
     });
   });
 
   test('handle validation', async () => {
-    userEvent.click(await screen.findByRole('link', { name: /Регистрация/i }));
+    userEvent.click(await screen.findByRole('link', { name: /Register/i }));
     await waitFor(() => {
       expect(window.location.pathname).toBe('/signup');
     });
-    userEvent.type(await screen.findByLabelText(/Имя пользователя/i), 'u');
-    userEvent.type(await screen.findByLabelText(/^Пароль$/i), 'pass');
-    userEvent.type(await screen.findByLabelText(/Подтвердите пароль/i), 'passw');
-    userEvent.click(await screen.findByRole('button', { name: /Зарегистрироваться/i }));
-    expect(await screen.findByText(/От 3 до 20 символов/i)).toBeVisible();
-    expect(await screen.findByText(/Не менее 6 символов/i)).toBeVisible();
-    expect(await screen.findByText(/Пароли должны совпадать/i)).toBeVisible();
+    userEvent.type(await screen.findByLabelText(/Username/i), 'u');
+    userEvent.type(await screen.findByLabelText(/^Password$/i), 'pass');
+    userEvent.type(await screen.findByLabelText(/Confirm password/i), 'passw');
+    userEvent.click(await screen.findByRole('button', { name: /Sign up/i }));
+    expect(await screen.findByText(/From 3 to 20 symbols/i)).toBeVisible();
+    expect(await screen.findByText(/At least 6 symbols/i)).toBeVisible();
+    expect(await screen.findByText(/Passwords must match/i)).toBeVisible();
   });
 });
 
@@ -161,40 +161,40 @@ describe('chat', () => {
       rest.post('/api/v1/login', mockSingin),
       rest.get('/api/v1/data', mockInitialData),
     );
-    userEvent.type(await screen.findByLabelText(/Ваш ник/i), 'user');
-    userEvent.type(await screen.findByLabelText(/Пароль/i), 'pass');
-    userEvent.click(await screen.findByRole('button', { name: /Войти/i }));
+    userEvent.type(await screen.findByLabelText(/Nickname/i), 'user');
+    userEvent.type(await screen.findByLabelText(/Password/i), 'pass');
+    userEvent.click(await screen.findByRole('button', { name: /Log in/i }));
     await screen.findByTestId('new-message');
   });
 
   test('messaging', async () => {
     userEvent.type(await screen.findByTestId('new-message'), 'hello');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByText(/hello/i)).toBeInTheDocument();
   });
 
   test('different channels', async () => {
     userEvent.type(await screen.findByTestId('new-message'), 'message for general');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByText(/message for general/i)).toBeInTheDocument();
     userEvent.click(await screen.findByRole('button', { name: /random/i }));
     expect(screen.queryByText(/message for general/i)).not.toBeInTheDocument();
     userEvent.type(await screen.findByTestId('new-message'), 'message for random');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByText(/message for random/i)).toBeInTheDocument();
   });
 
   test('adding channel', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
   });
 
   test('adding channel with existing name', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'random');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     await waitFor(async () => {
       expect(await screen.findByTestId('invalid-feedback')).toBeInTheDocument();
     });
@@ -203,23 +203,23 @@ describe('chat', () => {
   test('renaming channel', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     userEvent.click(await screen.findByTestId('dropdown'));
-    expect(await screen.findByText(/Переименовать/i)).toBeInTheDocument();
-    userEvent.click(await screen.findByRole('button', { name: /Переименовать/i }));
+    expect(await screen.findByText(/Rename/i)).toBeInTheDocument();
+    userEvent.click(await screen.findByRole('button', { name: /Rename/i }));
     userEvent.type(await screen.findByTestId('rename-channel'), 'renamed channel');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByRole('button', { name: /renamed channel/i })).toBeInTheDocument();
   });
 
   test('renaming channel to an existing name', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     userEvent.click(await screen.findByTestId('dropdown'));
-    userEvent.click(await screen.findByRole('button', { name: /Переименовать/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Rename/i }));
     userEvent.type(await screen.findByTestId('rename-channel'), 'general');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     await waitFor(async () => {
       expect(await screen.findByTestId('invalid-feedback')).toBeInTheDocument();
     });
@@ -228,11 +228,11 @@ describe('chat', () => {
   test('removing channel', async () => {
     userEvent.click(await screen.findByRole('button', { name: '+' }));
     userEvent.type(await screen.findByTestId('add-channel'), 'test channel');
-    userEvent.click(await screen.findByRole('button', { name: /Отправить/i }));
+    userEvent.click(await screen.findByRole('button', { name: /Send/i }));
     expect(await screen.findByRole('button', { name: /test channel/i })).toBeInTheDocument();
     userEvent.click(await screen.findByTestId('dropdown'));
-    expect(await screen.findByText(/Удалить/i)).toBeInTheDocument();
-    userEvent.click(await screen.findByRole('button', { name: /Удалить/i }));
+    expect(await screen.findByText(/Delete/i)).toBeInTheDocument();
+    userEvent.click(await screen.findByRole('button', { name: /Delete/i }));
     expect(await screen.findByTestId('remove-button')).toBeInTheDocument();
     userEvent.click(await screen.findByTestId('remove-button'));
     await waitFor(() => {
