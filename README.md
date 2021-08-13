@@ -1,6 +1,5 @@
 ## Hexlet Chat 
 
-[![hexlet-check](https://github.com/boldurean/frontend-project-lvl4/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/boldurean/frontend-project-lvl4/actions)
 [![Node CI](https://github.com/boldurean/frontend-project-lvl4/actions/workflows/nodejs.yml/badge.svg)](https://github.com/boldurean/frontend-project-lvl4/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c4075110e840775768d/maintainability)](https://codeclimate.com/github/boldurean/frontend-project-lvl4/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5c4075110e840775768d/test_coverage)](https://codeclimate.com/github/boldurean/frontend-project-lvl4/test_coverage)
